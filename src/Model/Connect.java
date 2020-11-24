@@ -45,18 +45,14 @@ public class Connect {
 		return rs;
 	}
 	
-	public void insertStaff(String nama, int umur, String role) {
+	public PreparedStatement prepareStatement(String querry) {
+		PreparedStatement ps = null;
 		try {
-			ps = con.prepareStatement("INSERT INTO staff (nama, umur, role) VALUES (?, ?, ?)");
-			ps.setString(1, nama);
-			ps.setInt(2, umur);
-			ps.setString(3, role);
-			
-			ps.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			ps = con.prepareStatement(querry);
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return ps;
 	}
 	
 	public void execUpdate(String query) {
@@ -67,17 +63,30 @@ public class Connect {
 			e.printStackTrace();
 		}
 	}
-	
-	public void loginStaff(String username, String password) {
-		try {
-			ps = con.prepareStatement("SELECT * FROM user WHERE username=? AND password=?");
-			ps.setString(1, username);
-			ps.setString(2, password);
-			rs = ps.executeQuery();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		
+//	public void insertStaff(String nama, int umur, String role) {
+//		try {
+//			ps = con.prepareStatement("INSERT INTO staff (nama, umur, role) VALUES (?, ?, ?)");
+//			ps.setString(1, nama);
+//			ps.setInt(2, umur);
+//			ps.setString(3, role);
+//			
+//			ps.execute();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	public void loginStaff(String username, String password) {
+//		try {
+//			ps = con.prepareStatement("SELECT * FROM user WHERE username=? AND password=?");
+//			ps.setString(1, username);
+//			ps.setString(2, password);
+//			rs = ps.executeQuery();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 }
