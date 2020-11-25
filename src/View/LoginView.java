@@ -7,8 +7,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,48 +19,60 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Controller.UserHandler;
+import Model.User;
+
 public class LoginView extends JFrame{
 
 	JPanel top, mid, bot;
-	JLabel titleLbl, emailLbl, passwordLbl;
+	JLabel titleLbl, emailLbl, passwordLbl, roleLbl;
 	JTextField emailTxt, passwordTxt;
+	JComboBox<String> roleBox;
 	JButton loginBtn;
 	
+	Vector<String> roleList;
+	
+	User user;
+	public User temp;
+	
 	public LoginView() {
+		user = new User();
 		setTitle("Login Page");
 		
 		top = new JPanel(new FlowLayout());
-		GridLayout gl = new GridLayout(2, 2);
+		GridLayout gl = new GridLayout(3, 2);
 		mid = new JPanel(gl);
 		bot = new JPanel(new FlowLayout());
 		
 		titleLbl = new JLabel("Login Page");
 		emailLbl = new JLabel("Email");
 		passwordLbl = new JLabel("Password");
+		roleLbl = new JLabel("Role");
 		
 		emailTxt = new JTextField();
 		passwordTxt = new JPasswordField();
 		
+		roleList = new Vector<>();
+		roleList.add("Employee");
+		roleList.add("Student");
+		roleList.add("Staff");
+		roleBox = new JComboBox<>(roleList);
+		
 		loginBtn = new JButton("Login");
-//		loginBtn.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				con.loginUser(emailTxt.getText(), passwordTxt.getText());
-//				
-//				try {
-//					if(con.rs.first()) {
-//						JOptionPane.showMessageDialog(null, "Login Sukses");
-//					}
-//					else {
-//						JOptionPane.showMessageDialog(null, "Login Gagal");
-//					}
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//			}
-//		});
+		loginBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				temp = user.getOne(emailTxt.getText(), passwordTxt.getText());
+				System.out.println(temp.userID); // Return ke HomeView
+				System.out.println(temp.name);
+				System.out.println(temp.email);
+				System.out.println(temp.password);
+				System.out.println(temp.address);
+				System.out.println(temp.phoneNumber);
+				System.out.println(temp.role);
+			}
+		});
 		
 		top.add(titleLbl);
 		
@@ -66,6 +80,8 @@ public class LoginView extends JFrame{
 		mid.add(emailTxt);
 		mid.add(passwordLbl);
 		mid.add(passwordTxt);
+		mid.add(roleLbl);
+		mid.add(roleBox);
 		
 		mid.setBorder(new EmptyBorder(20, 20, 20, 20));
 		

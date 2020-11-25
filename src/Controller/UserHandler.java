@@ -1,19 +1,28 @@
 package Controller;
 
-import Model.Connect;
+import Model.User;
+import View.LoginView;
 
 public class UserHandler {
 	
-	Connect con = new Connect();
+	LoginView loginView;
+	User user = new User();
 
 	public UserHandler() {
 		
 	}
 
-	public void viewLogin() {
-		
+	public LoginView viewLogin() {
+		return loginView = new LoginView();
 	}
 	
-	
+	public User getUser(int userID) {
+		for (User x : user.getAll()) {
+			if(x.userID == userID) {
+				return x;
+			}
+		}
+		return null;
+	}
 	
 }
