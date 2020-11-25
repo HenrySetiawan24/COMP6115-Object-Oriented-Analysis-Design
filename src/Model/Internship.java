@@ -5,33 +5,29 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 public class Internship {
-	private static Connect connection = new Connect();
-	private static Vector<Internship> dataset = null;
+	protected static Connect connection = new Connect();
 	
 	public int jobID=0;
 	public int companyID=0;
 	public String name="";
 	public String description="";
-	public int salary=0;
 	
-	public Internship(int jobID, int companyID, String name, String description, int salary) {
+	public Internship(int jobID, int companyID, String name, String description) {
 		this.jobID=jobID;
 		this.companyID=companyID;
 		this.name=name;
 		this.description=description;
-		this.salary=salary;
 	}
 	
-	public static Vector<Internship> GetAll() {
-		ResultSet data = connection.execQuery("SELECT * FROM internship");
-		initDataset();
+	public static Vector<Internship> getAll() {
+		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE salary IS NULL");
+		Vector<Internship> dataset = new Vector<>();
 		try {
 			while(data.next()) {
 				Internship n = new Internship(	data.getInt("jobID"), 
 												data.getInt("companyID"), 
 												data.getString("name"), 
-												data.getString("description"), 
-												data.getInt("salary"));
+												data.getString("description"));
 				dataset.add(n);
 			}	
 		}catch(SQLException e) {
@@ -41,10 +37,38 @@ public class Internship {
 		
 	}
 	
-	private static void initDataset() {
-		if(dataset==null)dataset=new Vector<>();
-		else {
-			dataset.clear();
+	public static Internship find(int jobID) {
+		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE jobID="+jobID+" AND salary IS NULL");
+		try {
+			while(data.next()) {
+				Internship n = new Internship(	data.getInt("jobID"), 
+											data.getInt("companyID"), 
+											data.getString("name"), 
+											data.getString("description"));
+				return n;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public static boolean insert(int companyID, String name, String description) {
+		return connection.execUpdate("INSERT INTO `internship` "
+									+ "(`jobID`, `companyID`, `name`, `description`) VALUES "
+									+ "(NULL, '"+companyID+"', '"+name+"', '"+description+"');");
+	}
+	
+	public static boolean delete(int jobID) {
+		return connection.execUpdate("DELETE FROM `internship` "
+									+ "WHERE `internship`.`jobID` = '"+jobID+"' AND salary IS NULL");
+	}
+	
+	public static boolean update(int jobID, int companyID, String name, String description) {
+		return connection.execUpdate("UPDATE `internship` "
+									+ "SET `name` = '"+name
+									+"', `description` = '"+description
+									+"' WHERE `internship`.`jobID` = "+jobID
+									+" AND `internship`.`companyID` = "+companyID+";");
 	}
 }
