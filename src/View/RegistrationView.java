@@ -22,8 +22,8 @@ import javax.swing.border.EmptyBorder;
 import Controller.CompanyHandler;
 import Controller.UserHandler;
 
+@SuppressWarnings("serial")
 public class RegistrationView extends JFrame{
-	
 	JPanel top, mid, bot;
 	JLabel titleLbl, nameLbl, emailLbl, passwordLbl, addressLbl, phoneNumberLbl, roleLbl;
 	JTextField nameTxt, emailTxt, passwordTxt, phoneNumberTxt;
@@ -32,9 +32,6 @@ public class RegistrationView extends JFrame{
 	JButton registerBtn;
 	
 	Vector<String> roleList;
-	
-	UserHandler userHandler = new UserHandler();
-	CompanyHandler companyHandler = new CompanyHandler();
 
 	public RegistrationView() {
 		setTitle("Register Page");
@@ -63,6 +60,7 @@ public class RegistrationView extends JFrame{
 		roleList.add("Employee");
 		roleList.add("Student");
 		roleList.add("Staff");
+		roleList.add("Company");
 		roleBox = new JComboBox<>(roleList);
 		
 		registerBtn = new JButton("Register");
@@ -70,10 +68,10 @@ public class RegistrationView extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(userHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText(), roleBox.getSelectedItem().toString()) == true) {
+				if(!roleBox.getSelectedItem().toString().equals("Company") && UserHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText(), roleBox.getSelectedItem().toString()) == true) {
 					JOptionPane.showMessageDialog(null, "Registration Sukses");
 				}
-				else if(companyHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText()) == true) {
+				else if(roleBox.getSelectedItem().toString().equals("Company") && CompanyHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText()) == true) {
 					JOptionPane.showMessageDialog(null, "Registration Sukses");
 				}
 				else {

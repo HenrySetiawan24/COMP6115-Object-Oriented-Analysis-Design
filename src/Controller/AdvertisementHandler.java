@@ -46,7 +46,7 @@ public class AdvertisementHandler {
 		return null;
 	}
 	
-	public static void viewadvertisementMenu() {
-		new EditAdvertisement();
+	public static void viewAdvertisementMenu(int companyID) {
+		new EditAdvertisement(companyID);
 	}
 }

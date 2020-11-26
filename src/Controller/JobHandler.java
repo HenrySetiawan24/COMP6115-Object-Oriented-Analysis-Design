@@ -33,8 +33,8 @@ public class JobHandler {
 		return false;
 	}
 	
-	public static void ViewJobMenu() {
-		new EditJob();
+	public static void ViewJobMenu(int companyID) {
+		new EditJob(companyID);
 	}
 	
 	public static boolean CheckJob(int jobID, int companyID) {

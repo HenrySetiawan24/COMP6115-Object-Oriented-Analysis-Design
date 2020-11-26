@@ -2,7 +2,6 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.JobHandler;
 import Model.Job;
 
+@SuppressWarnings("serial")
 public class EditJob extends JFrame{
 	JPanel top, mid, bot;
 	JTable dataTable;
@@ -34,15 +34,15 @@ public class EditJob extends JFrame{
 	Vector<String> Header, Detail;
 	Vector<Vector<String>> Data;
 	
-	public EditJob() {
-		init();
+	public EditJob(int companyID) {
+		init(companyID);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	public void init() {
+	public void init(int companyID) {
 		top = new JPanel();
 		mid = new JPanel(new GridLayout(5, 2));
 		bot = new JPanel(); 
@@ -85,7 +85,7 @@ public class EditJob extends JFrame{
 				SalaryTxt.setText(dataTable.getValueAt(row, 4).toString()+"");
 			}
 		});
-		loadData();
+		loadData(companyID);
 		
 		scrollPane = new JScrollPane(dataTable);
 		scrollPane.setPreferredSize(new Dimension(850, 300));
@@ -97,7 +97,7 @@ public class EditJob extends JFrame{
 		SalaryLabel = new JLabel("Salary: ");
 		
 		JobIDTxt = new JLabel("");
-		CompanyIDTxt=  new JLabel("");
+		CompanyIDTxt=  new JLabel(companyID+"");
 		NameTxt = new JTextField();
 		DescriptionTxt = new JTextField();
 		SalaryTxt = new JTextField();
@@ -127,17 +127,16 @@ public class EditJob extends JFrame{
 					return;
 				}
 				JobHandler.insert(1, name, description, salary);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		Update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int jobID, companyID;
+				int jobID;
 				try {
 					jobID=Integer.parseInt(JobIDTxt.getText());
-					companyID=Integer.parseInt(CompanyIDTxt.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select a Job to Edit!");
 					return;
@@ -161,7 +160,7 @@ public class EditJob extends JFrame{
 					return;
 				}
 				JobHandler.update(jobID, companyID, name, description, salary);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		Delete.addActionListener(new ActionListener() {
@@ -169,16 +168,14 @@ public class EditJob extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int jobID=0;
-				int companyID=0;
 				try {
 					jobID=Integer.parseInt(JobIDTxt.getText());
-					companyID=Integer.parseInt(CompanyIDTxt.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select a Job to Edit!");
 					return;
 				}
 				JobHandler.delete(jobID, companyID);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		
@@ -204,7 +201,7 @@ public class EditJob extends JFrame{
 		add(bot, BorderLayout.SOUTH);
 	}
 	
-	private void loadData() {
+	private void loadData(int companyID) {
 		if(Header==null) {
 			Header = new Vector<>();
 			Header.add("JobID");
@@ -215,7 +212,7 @@ public class EditJob extends JFrame{
 		}
 		if(Data==null)Data = new Vector<>();
 		else Data.clear();
-		for(Job j : JobHandler.GetAll()) {
+		for(Job j : JobHandler.GetAll(companyID)) {
 			Detail=new Vector<>();
 			
 			Detail.add(j.jobID+"");

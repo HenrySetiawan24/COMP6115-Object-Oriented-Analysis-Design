@@ -19,7 +19,6 @@ public class Connect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			// Bikin Koneksinya
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/deluxe", "root", "");
 			state = con.createStatement();
 			System.out.println("Koneksi Berhasil");

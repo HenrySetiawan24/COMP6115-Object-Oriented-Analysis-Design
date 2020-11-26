@@ -33,8 +33,8 @@ public class InternshipHandler {
 		return false;
 	}
 	
-	public static void ViewInternshipMenu() {
-		new EditInternship();
+	public static void ViewInternshipMenu(int companyID) {
+		new EditInternship(companyID);
 	}
 	
 	public static boolean CheckInternship(int jobID, int companyID) {

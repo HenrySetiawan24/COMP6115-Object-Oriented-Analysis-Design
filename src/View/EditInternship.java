@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.InternshipHandler;
 import Model.Internship;
 
+@SuppressWarnings("serial")
 public class EditInternship extends JFrame{
 	JPanel top, mid, bot;
 	JTable dataTable;
@@ -33,15 +34,15 @@ public class EditInternship extends JFrame{
 	Vector<String> Header, Detail;
 	Vector<Vector<String>> Data;
 	
-	public EditInternship() {
-		init();
+	public EditInternship(int companyID) {
+		init(companyID);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	public void init() {
+	public void init(int companyID) {
 		top = new JPanel();
 		mid = new JPanel(new GridLayout(5, 2));
 		bot = new JPanel(); 
@@ -83,7 +84,7 @@ public class EditInternship extends JFrame{
 				DescriptionTxt.setText(dataTable.getValueAt(row, 3).toString()+"");
 			}
 		});
-		loadData();
+		loadData(companyID);
 		
 		scrollPane = new JScrollPane(dataTable);
 		scrollPane.setPreferredSize(new Dimension(850, 300));
@@ -94,7 +95,7 @@ public class EditInternship extends JFrame{
 		DescriptionLabel = new JLabel("Description: ");
 		
 		JobIDTxt = new JLabel("");
-		CompanyIDTxt=  new JLabel("");
+		CompanyIDTxt=  new JLabel(companyID+"");
 		NameTxt = new JTextField();
 		DescriptionTxt = new JTextField();
 		
@@ -116,17 +117,16 @@ public class EditInternship extends JFrame{
 					return;
 				}
 				Internship.insert(1, name, description);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		Update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int jobID, companyID;
+				int jobID;
 				try {
 					jobID=Integer.parseInt(JobIDTxt.getText());
-					companyID=Integer.parseInt(CompanyIDTxt.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select a Job to Edit!");
 					return;
@@ -143,7 +143,7 @@ public class EditInternship extends JFrame{
 					return;
 				}
 				InternshipHandler.update(jobID, companyID, name, description);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		Delete.addActionListener(new ActionListener() {
@@ -151,16 +151,14 @@ public class EditInternship extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int jobID=0;
-				int companyID=0;
 				try {
 					jobID=Integer.parseInt(JobIDTxt.getText());
-					companyID=Integer.parseInt(CompanyIDTxt.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select a Job to Edit!");
 					return;
 				}
 				InternshipHandler.delete(jobID, companyID);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		
@@ -184,7 +182,7 @@ public class EditInternship extends JFrame{
 		add(bot, BorderLayout.SOUTH);
 	}
 	
-	private void loadData() {
+	private void loadData(int companyID) {
 		if(Header==null) {
 			Header = new Vector<>();
 			Header.add("JobID");
@@ -194,7 +192,7 @@ public class EditInternship extends JFrame{
 		}
 		if(Data==null)Data = new Vector<>();
 		else Data.clear();
-		for(Internship i : InternshipHandler.GetAll()) {
+		for(Internship i : InternshipHandler.GetAll(companyID)) {
 			Detail=new Vector<>();
 			
 			Detail.add(i.jobID+"");

@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import Controller.AdvertisementHandler;
 import Model.Advertisement;
 
+@SuppressWarnings("serial")
 public class EditAdvertisement extends JFrame{
 	JPanel top, mid, bot;
 	JTable dataTable;
@@ -33,15 +34,15 @@ public class EditAdvertisement extends JFrame{
 	Vector<String> Header, Detail;
 	Vector<Vector<String>> Data;
 	
-	public EditAdvertisement() {
-		init();
+	public EditAdvertisement(int companyID) {
+		init(companyID);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	public void init() {
+	public void init(int companyID) {
 		top = new JPanel();
 		mid = new JPanel(new GridLayout(5, 2));
 		bot = new JPanel(); 
@@ -83,7 +84,7 @@ public class EditAdvertisement extends JFrame{
 				DescriptionTxt.setText(dataTable.getValueAt(row, 3).toString()+"");
 			}
 		});
-		loadData();
+		loadData(companyID);
 		
 		scrollPane = new JScrollPane(dataTable);
 		scrollPane.setPreferredSize(new Dimension(850, 300));
@@ -94,7 +95,7 @@ public class EditAdvertisement extends JFrame{
 		DescriptionLabel = new JLabel("Description: ");
 		
 		advertisementIDTxt = new JLabel("");
-		CompanyIDTxt=  new JLabel("");
+		CompanyIDTxt=  new JLabel(companyID+"");
 		TitleTxt = new JTextField();
 		DescriptionTxt = new JTextField();
 		
@@ -116,17 +117,16 @@ public class EditAdvertisement extends JFrame{
 					return;
 				}
 				AdvertisementHandler.insert(1, title, description);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		Update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int advertisementID, companyID;
+				int advertisementID;
 				try {
 					advertisementID=Integer.parseInt(advertisementIDTxt.getText());
-					companyID=Integer.parseInt(CompanyIDTxt.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select a Job to Edit!");
 					return;
@@ -143,7 +143,7 @@ public class EditAdvertisement extends JFrame{
 					return;
 				}
 				AdvertisementHandler.update(advertisementID, companyID, title, description);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		Delete.addActionListener(new ActionListener() {
@@ -151,16 +151,14 @@ public class EditAdvertisement extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int advertisementID=0;
-				int companyID=0;
 				try {
 					advertisementID=Integer.parseInt(advertisementIDTxt.getText());
-					companyID=Integer.parseInt(CompanyIDTxt.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select a Job to Edit!");
 					return;
 				}
 				AdvertisementHandler.delete(advertisementID, companyID);
-				loadData();
+				loadData(companyID);
 			}
 		});
 		
@@ -184,7 +182,7 @@ public class EditAdvertisement extends JFrame{
 		add(bot, BorderLayout.SOUTH);
 	}
 	
-	private void loadData() {
+	private void loadData(int companyID) {
 		if(Header==null) {
 			Header = new Vector<>();
 			Header.add("advertisementID");
@@ -194,7 +192,7 @@ public class EditAdvertisement extends JFrame{
 		}
 		if(Data==null)Data = new Vector<>();
 		else Data.clear();
-		for(Advertisement j : AdvertisementHandler.GetAll()) {
+		for(Advertisement j : AdvertisementHandler.GetAll(companyID)) {
 			Detail=new Vector<>();
 			
 			Detail.add(j.advertisementID+"");
