@@ -16,6 +16,10 @@ public class UserHandler {
 		return loginView = new LoginView();
 	}
 	
+	public User getOne(String email, String password) {
+		return user.getOne(email, password);
+	}
+	
 	public User getUser(int userID) {
 		for (User x : user.getAll()) {
 			if(x.userID == userID) {

@@ -63,7 +63,6 @@ public class User {
 		
 		try {
 			if(con.rs.first()) {
-				JOptionPane.showMessageDialog(null, "Login Sukses");
 				this.userID = con.rs.getInt("userID");
 				this.name = con.rs.getString("name");
 				this.password = con.rs.getString("password");
@@ -76,7 +75,6 @@ public class User {
 				return this;
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "Login Gagal");
 				return null;
 			}
 		} catch (SQLException e) {

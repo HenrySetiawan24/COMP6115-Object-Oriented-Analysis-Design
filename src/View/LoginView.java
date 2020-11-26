@@ -19,7 +19,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Controller.CompanyHandler;
 import Controller.UserHandler;
+import Model.Company;
 import Model.User;
 
 public class LoginView extends JFrame{
@@ -32,11 +34,13 @@ public class LoginView extends JFrame{
 	
 	Vector<String> roleList;
 	
-	User user;
+	UserHandler userHandler = new UserHandler();
+	CompanyHandler companyHandler = new CompanyHandler();
+	
 	public User temp;
+	public Company comTemp; 
 	
 	public LoginView() {
-		user = new User();
 		setTitle("Login Page");
 		
 		top = new JPanel(new FlowLayout());
@@ -63,14 +67,31 @@ public class LoginView extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				temp = user.getOne(emailTxt.getText(), passwordTxt.getText());
-				System.out.println(temp.userID); // Return ke HomeView
-				System.out.println(temp.name);
-				System.out.println(temp.email);
-				System.out.println(temp.password);
-				System.out.println(temp.address);
-				System.out.println(temp.phoneNumber);
-				System.out.println(temp.role);
+				
+				if(userHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
+					temp = userHandler.getOne(emailTxt.getText(), passwordTxt.getText());
+					JOptionPane.showMessageDialog(null, "Login Sukses");
+					System.out.println(temp.userID); // Return ke HomeView
+					System.out.println(temp.name);
+					System.out.println(temp.email);
+					System.out.println(temp.password);
+					System.out.println(temp.address);
+					System.out.println(temp.phoneNumber);
+					System.out.println(temp.role);
+				}
+				else if(companyHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
+					comTemp = companyHandler.getOne(emailTxt.getText(), passwordTxt.getText());
+					JOptionPane.showMessageDialog(null, "Login Sukses");
+					System.out.println(comTemp.companyID); // Return ke HomeView
+					System.out.println(comTemp.name);
+					System.out.println(comTemp.email);
+					System.out.println(comTemp.password);
+					System.out.println(comTemp.address);
+					System.out.println(comTemp.phoneNumber);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Login Gagal");
+				}
 			}
 		});
 		
@@ -80,8 +101,6 @@ public class LoginView extends JFrame{
 		mid.add(emailTxt);
 		mid.add(passwordLbl);
 		mid.add(passwordTxt);
-		mid.add(roleLbl);
-		mid.add(roleBox);
 		
 		mid.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
@@ -96,7 +115,7 @@ public class LoginView extends JFrame{
 	public void init() {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(new Dimension(400,900));
+		setSize(new Dimension(900,600));
 		setLocationRelativeTo(null);
 	}
 

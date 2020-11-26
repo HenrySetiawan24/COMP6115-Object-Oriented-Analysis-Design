@@ -1,7 +1,6 @@
 package Main;
 
 import Controller.UserHandler;
-import Model.User;
 
 public class Main {
 	
