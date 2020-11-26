@@ -9,13 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Connect {
-	
-	ResultSet rs;
-	ResultSetMetaData rsm;
 	Connection con;
 	Statement state;
+	ResultSet rs;
+	ResultSetMetaData rsm;
 	PreparedStatement ps;
-
+	
 	public Connect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -63,17 +62,5 @@ public class Connect {
 			e.printStackTrace();
 		}
 	}
-	
-//	public void loginUser(String email, String password, String role) {
-//		try {
-//			ps = con.prepareStatement("SELECT * FROM user WHERE email=? AND password=? AND role=?");
-//			ps.setString(1, email);
-//			ps.setString(2, password);
-//			ps.setString(3, role);
-//			rs = ps.executeQuery();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 }
