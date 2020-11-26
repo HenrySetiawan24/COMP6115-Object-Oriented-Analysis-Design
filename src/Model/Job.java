@@ -33,10 +33,10 @@ public class Job extends Internship{
 		try {
 			while(data.next()) {
 				Job n = new Job(	data.getInt("jobID"), 
-										data.getInt("companyID"), 
-										data.getString("name"), 
-										data.getString("description"),
-										data.getLong("salary"));
+									data.getInt("companyID"), 
+									data.getString("name"), 
+									data.getString("description"),
+									data.getLong("salary"));
 				return n;
 			}
 		}catch(SQLException e) {
