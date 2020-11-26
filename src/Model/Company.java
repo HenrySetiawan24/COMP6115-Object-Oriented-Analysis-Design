@@ -31,6 +31,29 @@ public class Company {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public boolean insert(String name, String email, String password, String address, String phoneNumber) {
+		con.ps = con.prepareStatement("INSERT INTO company (name, email, password, address, phoneNum) VALUES (?, ?, ?, ?, ?)");
+		try {
+			if(con.ps != null) {
+				con.ps.setString(1, name);
+				con.ps.setString(2, email);
+				con.ps.setString(3, password);
+				con.ps.setString(4, address);
+				con.ps.setString(5, phoneNumber);
+				con.ps.execute();
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public Vector<Company> getAll(){
 		con.rs = con.execQuery("SELECT * FROM company");
 		initCompanyList();

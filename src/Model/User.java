@@ -33,6 +33,30 @@ public class User {
 		this.role = role;
 	}
 	
+	public boolean insert(String name, String email, String password, String address, String phoneNumber, String role) {
+		con.ps = con.prepareStatement("INSERT INTO user (name, email, password, address, phoneNum, role) VALUES (?, ?, ?, ?, ?, ?)");
+		try {
+			if(con.ps != null) {
+				con.ps.setString(1, name);
+				con.ps.setString(2, email);
+				con.ps.setString(3, password);
+				con.ps.setString(4, address);
+				con.ps.setString(5, phoneNumber);
+				con.ps.setString(6, role);
+				con.ps.execute();
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public Vector<User> getAll(){
 		con.rs = con.execQuery("SELECT * FROM user");
 		initUserList();
