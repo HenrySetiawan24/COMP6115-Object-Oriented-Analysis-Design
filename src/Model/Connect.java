@@ -54,13 +54,16 @@ public class Connect {
 		return ps;
 	}
 	
-	public void execUpdate(String query) {
+	public boolean execUpdate(String query) {
+		int re=0;
 		try {
-			state.executeUpdate(query);
+			re=state.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(re==0)return false;
+		else return true;
 	}
 
 }

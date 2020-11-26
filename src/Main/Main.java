@@ -1,5 +1,8 @@
 package Main;
 
+import View.EditAdvertisement;
+import View.EditInternship;
+import View.EditJob;
 import Controller.UserHandler;
 import View.RegistrationView;
 
@@ -9,7 +12,7 @@ public class Main {
 	RegistrationView view;
 	
 	public Main() {
-		//userHandler.viewLogin();
+		new EditAdvertisement();
 		view = userHandler.viewRegistration();
 	}
 	public static void main(String[]Args) {
