@@ -1,16 +1,10 @@
 package Main;
 
-import Controller.UserHandler;
-import View.RegistrationView;
+import View.MainMenu;
 
 public class Main {
-	
-	UserHandler userHandler = new UserHandler();
-	RegistrationView view;
-	
 	public Main() {
-		//userHandler.viewLogin();
-		view = userHandler.viewRegistration();
+		new MainMenu();
 	}
 	public static void main(String[]Args) {
 		new Main();

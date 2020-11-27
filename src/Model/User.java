@@ -3,8 +3,6 @@ package Model;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
-
 public class User {
 	public int userID;
 	public String name;

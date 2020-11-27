@@ -3,6 +3,7 @@ package Controller;
 import java.util.regex.Pattern;
 
 import Model.Company;
+import View.CompanyMenu;
 
 public class CompanyHandler {
 
@@ -11,20 +12,20 @@ public class CompanyHandler {
             "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
             "A-Z]{2,7}$";
 	
-	Company company = new Company();
+	static Company company = new Company();
 	
 	public CompanyHandler() {
 		
 	}
 	
-	public boolean createAccount(String name, String email, String password, String address, String phoneNumber) {
+	public static boolean createAccount(String name, String email, String password, String address, String phoneNumber) {
 		if(name == null || checkEmail(email) == false ||  password == null ||  address == null ||  phoneNumber == null) {
 			return false;
 		}
 		return company.insert(name, email, password, address, phoneNumber);
 	}
 	
-	public boolean checkEmail(String email) {
+	public static boolean checkEmail(String email) {
 		if(email == null) {
 			return false;
 		}
@@ -33,16 +34,19 @@ public class CompanyHandler {
 		return pattern.matcher(email).matches();
 	}
 
-	public Company getOne(String email, String password) {
+	public static Company getOne(String email, String password) {
 		return company.getOne(email, password);
 	}
 	
-	public Company getCompany(int companyID) {
+	public static Company getCompany(int companyID) {
 		for (Company x : company.getAll()) {
 			if(x.companyID == companyID) {
 				return x;
 			}
 		}
 		return null;
+	}
+	public static void viewCompanyMenu(int companyID) {
+		new CompanyMenu(companyID);
 	}
 }

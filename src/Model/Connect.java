@@ -19,7 +19,6 @@ public class Connect {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			// Bikin Koneksinya
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/deluxe", "root", "");
 			state = con.createStatement();
 			System.out.println("Koneksi Berhasil");
@@ -54,13 +53,16 @@ public class Connect {
 		return ps;
 	}
 	
-	public void execUpdate(String query) {
+	public boolean execUpdate(String query) {
+		int re=0;
 		try {
-			state.executeUpdate(query);
+			re=state.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(re==0)return false;
+		else return true;
 	}
 
 }
