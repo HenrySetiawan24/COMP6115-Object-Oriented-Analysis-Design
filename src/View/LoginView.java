@@ -20,8 +20,6 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.CompanyHandler;
 import Controller.UserHandler;
-import Model.Company;
-import Model.User;
 
 @SuppressWarnings("serial")
 public class LoginView extends JFrame{
@@ -32,9 +30,6 @@ public class LoginView extends JFrame{
 	JButton loginBtn;
 	
 	Vector<String> roleList;
-	
-	public User temp;
-	public Company comTemp; 
 	
 	public LoginView() {
 		init();
@@ -73,16 +68,14 @@ public class LoginView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				if(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
-					temp = UserHandler.getOne(emailTxt.getText(), passwordTxt.getText());
 					JOptionPane.showMessageDialog(null, "Login Sukses");
 					dispose();
-					UserHandler.viewUserMenu(temp.userID);
+					UserHandler.viewUserMenu(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()).userID);
 				}
 				else if(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
-					comTemp = CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText());
 					JOptionPane.showMessageDialog(null, "Login Sukses");
 					dispose();
-					CompanyHandler.viewCompanyMenu(comTemp.companyID);
+					CompanyHandler.viewCompanyMenu(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()).companyID);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Login Gagal");
