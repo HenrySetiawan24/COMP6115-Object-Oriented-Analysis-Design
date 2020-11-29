@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -18,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
 import Model.Connect;
 
@@ -83,20 +86,142 @@ public class ViewJobs extends JFrame{
 		update = new JButton("Update");
 		delete = new JButton("Delete");
 		
+		//SELECT row
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int row = table.getSelectedRow();
+				idValue.setText(table.getValueAt(row, 0).toString()+"");
+				uidTxt.setText(table.getValueAt(row, 1).toString()+"");
+				jidTxt.setText(table.getValueAt(row, 2).toString()+"");
+				nameTxt.setText(table.getValueAt(row, 3).toString()+""); 
+				descTxt.setText(table.getValueAt(row, 4).toString()+"");
+				reqTxt.setText(table.getValueAt(row, 5).toString()+"");
+				roleTxt.setText(table.getValueAt(row, 6).toString()+"");
+				
+//				JobIDTxt.setText(dataTable.getValueAt(row, 0).toString()+"");
+//				CompanyIDTxt.setText(dataTable.getValueAt(row, 1).toString()+"");
+//				NameTxt.setText(dataTable.getValueAt(row, 2).toString()+"");
+//				DescriptionTxt.setText(dataTable.getValueAt(row, 3).toString()+"");
+//				SalaryTxt.setText(dataTable.getValueAt(row, 4).toString()+"");
+			}
+		});
+		
+		//INSERT button
 		insert.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				String name = nameTxt.getText();
+				String desc = descTxt.getText();
+				String req = reqTxt.getText();
+				String role = roleTxt.getText();
+				Integer uid = 0;
+				Integer jid = 0;
+				
+				try {
+					uid = Integer.parseInt(uidTxt.getText());
+					jid = Integer.parseInt(jidTxt.getText());
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(null, "ID must be integer");
+					return; 
+			}
+				
+			ApplicationHandler.insert(uid, jid, name, desc, req, role);
+			loadData(con.execQuery("SELECT * FROM application"));
+			}
+		});
+		
+		//UPDATE button
+		update.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ApplicationHandler.insert(10, 10, "test", "test", "test", "test");
+				String name = nameTxt.getText();
+				String desc = descTxt.getText();
+				String req = reqTxt.getText();
+				String role = roleTxt.getText();
+				Integer aid = 0;
+				Integer uid = 0;
+				Integer jid = 0;
+				try {
+					uid = Integer.parseInt(uidTxt.getText());
+					jid = Integer.parseInt(jidTxt.getText());
+					aid = Integer.parseInt(idValue.getText());
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "ID must be integer");
+					return; 
+				}
+				
+				ApplicationHandler.update(aid, uid, jid, name, desc, req, role);
 				loadData(con.execQuery("SELECT * FROM application"));
 				
 			}
 		});
 		
+		//DELETE button
+		delete.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				int aid = 0;
+				try {
+					aid = Integer.parseInt(idValue.getText());
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "ID must be integer");
+					return; 
+				}
+				
+				ApplicationHandler.delete(aid);
+				loadData(con.execQuery("SELECT * FROM application"));
+				
+			}
+		});
+		
+		
 //		sp.setPreferredSize(500,500);
 		
+		//Randomize Advertisement
+		int rowcount = adtable.getRowCount();
+		int min = 1;
+		int range = rowcount - min + 1;
+		int random = 0;
+		for(int i = 0 ; i < rowcount; i++ )
+		{
+			 random = (int)(Math.random() * range ) + min; 
+		}
 		loadData(con.execQuery("SELECT * FROM application"));
-		loadadData(con.execQuery("SELECT * FROM advertisement"));
+//		
+		loadadData(con.execQuery("SELECT * FROM advertisement WHERE advertisementID = "+random));
 		
 		top.add(sp);
 		top.add(adsp);
@@ -128,36 +253,7 @@ public class ViewJobs extends JFrame{
 		add(bot,BorderLayout.SOUTH);
 		add(left,BorderLayout.EAST);
 		
-//		insert.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				String name = nameTxt.getText();
-//				String desc = descTxt.getText();
-//				String req = reqTxt.getText();
-//				String role = roleTxt.getText();
-//				Integer uid = 0;
-//				Integer jid = 0;
-//				try {
-//					uid = Integer.parseInt(uidTxt.getText());
-//					jid = Integer.parseInt(jidTxt.getText());
-//				} catch (NumberFormatException e1) {
-//					// TODO Auto-generated catch block
-//					JOptionPane.showMessageDialog(null, "ID must be integer");
-//					return; 
-//				}
-//				String query = String.format("INSERT INTO 'application'(`userID`,`jobID`,`name`,`cvdescription`,`transcriptdescription`,`type`)"
-//						+ "VALUES(NULL, '"+uid+"', '"+jid+"', '"+name+"', '"+desc+"', '"+req+"', '"+role+"');");
-//
-////											+ "VALUES('"+uid+"', '"+jid+"','"+name'"',`,`%s`,`%s`)", uid, jid, name, desc, req, role);
-//				System.out.println(query);
-////				String query = "INSERT INTO application(userID,jobID,name,cvdescription,transcriptdescription,type) VALUES(NULL,"+uid+""
-////				printf(""+query);
-//				con.execUpdate(query);
-//				loadData(con.execQuery("SELECT * FROM application"));
-//
-//			}
-//		});
+
 	}
 	
 	private void loadadData(ResultSet rs) {
