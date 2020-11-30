@@ -1,5 +1,6 @@
 package View;
 
+import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,34 +24,28 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
-import Controller.JobHandler;
-import Controller.UserHandler;
 import Model.Advertisement;
 import Model.Application;
 import Model.Connect;
-import Model.Job;
 
-public class ViewJobs extends JFrame{
-	
+
+public class ViewAdvertisement extends JFrame {
+
 	Connect con = new Connect();
 	JPanel top,mid,bot,left;
-	JTable table;
+
 	JTable adtable;
 	JScrollPane sp;
 	JScrollPane adsp;
-	JLabel idLbl,idValue,nameLbl,descLbl,reqLbl,roleLbl,uidLbl,jidLbl;
-	JLabel adidLbl,adnameLbl,addescLbl;
-	JTextField nameTxt,descTxt,reqTxt,roleTxt,uidTxt,jidTxt;
+	JLabel adidLbl,cidLbl,adnameLbl,addescLbl;
 	JButton apply;
 	
-	Vector<Vector<String>> data;
 	Vector<Vector<String>> addata;
 
-	Vector<String> detail,header;
 	Vector<String> addetail,adheader;
 		
 	
-	public ViewJobs() {
+	public ViewAdvertisement() {
 		init();
 		setSize(900,600);
 		setLocationRelativeTo(null);
@@ -58,36 +53,22 @@ public class ViewJobs extends JFrame{
 		setVisible(true);
 	}
 	
+
 	private void init() {
 		top = new JPanel();
 		mid = new JPanel(new GridLayout(7,7));
 		bot = new JPanel();
 		left = new JPanel();
 		
-		table = new JTable();
 		adtable = new JTable();
 		
-		sp = new JScrollPane(table);
 		adsp = new JScrollPane(adtable);
 		
-		idLbl = new JLabel("ID:");
-		nameLbl = new JLabel("Name:");
-		descLbl = new JLabel("Desc:");
-		reqLbl = new JLabel("Req:");
-		roleLbl = new JLabel("Role:");
-		idValue = new JLabel("-");
-//		uidLbl = new JLabel("User ID:");
-//		jidLbl = new JLabel("Job ID:");
+
 		
 		adnameLbl = new JLabel("AD:");
 		addescLbl = new JLabel("Desc:");
 		
-		nameTxt = new JTextField();
-		descTxt = new JTextField();
-		reqTxt = new JTextField();
-		roleTxt = new JTextField();
-		uidTxt = new JTextField();
-		jidTxt = new JTextField();
 //		
 //		insert = new JButton("Insert");
 //		update = new JButton("Update");
@@ -96,7 +77,7 @@ public class ViewJobs extends JFrame{
 		apply = new JButton("Apply");
 		
 		//SELECT row
-		table.addMouseListener(new MouseListener() {
+		adtable.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -134,11 +115,6 @@ public class ViewJobs extends JFrame{
 				reqTxt.setText(table.getValueAt(row, 3).toString()+"");
 				roleTxt.setText(table.getValueAt(row, 4).toString()+"");
 				
-//				JobIDTxt.setText(dataTable.getValueAt(row, 0).toString()+"");
-//				CompanyIDTxt.setText(dataTable.getValueAt(row, 1).toString()+"");
-//				NameTxt.setText(dataTable.getValueAt(row, 2).toString()+"");
-//				DescriptionTxt.setText(dataTable.getValueAt(row, 3).toString()+"");
-//				SalaryTxt.setText(dataTable.getValueAt(row, 4).toString()+"");
 			}
 		});
 		
@@ -170,25 +146,24 @@ public class ViewJobs extends JFrame{
 		
 		
 		top.add(sp);
+		top.add(adsp);
 		
-		mid.add(adsp);
+		left.add(adsp);
 		
-//		left.add(adsp);
-		
-//		mid.add(idLbl);
-//		mid.add(idValue);
-//		mid.add(uidLbl);
-//		mid.add(uidTxt);
-//		mid.add(jidLbl);
-//		mid.add(jidTxt);
-//		mid.add(nameLbl);
-//		mid.add(nameTxt);
-//		mid.add(descLbl);
-//		mid.add(descTxt);
-//		mid.add(reqLbl);
-//		mid.add(reqTxt);
-//		mid.add(roleLbl);
-//		mid.add(roleTxt);
+		mid.add(idLbl);
+		mid.add(idValue);
+		mid.add(uidLbl);
+		mid.add(uidTxt);
+		mid.add(jidLbl);
+		mid.add(jidTxt);
+		mid.add(nameLbl);
+		mid.add(nameTxt);
+		mid.add(descLbl);
+		mid.add(descTxt);
+		mid.add(reqLbl);
+		mid.add(reqTxt);
+		mid.add(roleLbl);
+		mid.add(roleTxt);
 		
 		
 
@@ -203,72 +178,4 @@ public class ViewJobs extends JFrame{
 		
 
 	}
-	
-	private void loadadData(Integer advertisementID) {
-		adheader = new Vector<>();
-		addata = new Vector<>();
-		
-		adheader.add("AD");
-		adheader.add("AD Desc");
-		
-		if(addata==null)addata = new Vector<>();
-		else addata.clear();
-		
-		Advertisement a = AdvertisementHandler.GetAll().elementAt(advertisementID); 
-			addetail = new Vector<>();
-			
-			addetail.add(a.advertisementID+"");
-//			addetail.add(a.companyID+"");
-			addetail.add(a.title+"");
-//			addetail.add(a.description+"");
-
-			
-			addata.add(addetail);
-			
-		
-		
-		DefaultTableModel addtm = new DefaultTableModel(addata, adheader);
-		adtable.setModel(addtm);
-	}
-	
-	private void loadData(Integer userID) {
-		header = new Vector<>();
-		data = new Vector<>();
-		
-		header.add("Job ID");
-//		header.add("User ID");
-//		header.add("Company ID");
-		header.add("Company ID");
-		header.add("Job Name");
-		header.add("Job Desc");
-		header.add("Job Salary");
-		
-		if(data==null)data = new Vector<>();
-		else data.clear();
-		
-		for(Job j : JobHandler.GetAll(userID)) {
-			detail = new Vector<>();
-			
-			detail.add(j.jobID+"");
-//			detail.add(a.userID+"");
-//			detail.add(a.jobID+"");
-			detail.add(j.companyID+"");
-			detail.add(j.name+"");
-			detail.add(j.description+"");
-			detail.add(j.salary+"");
-			
-			data.add(detail);
-			
-		}
-		
-		DefaultTableModel dtm = new DefaultTableModel(data, header) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
-		table.setModel(dtm);
-	}
-
 }
