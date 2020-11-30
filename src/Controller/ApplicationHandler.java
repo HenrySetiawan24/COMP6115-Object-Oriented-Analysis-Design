@@ -14,10 +14,10 @@ public class ApplicationHandler {
 		return Application.getAll();
 	}
 	
-	public static Vector<Application> GetAll(int applicationID){
+	public static Vector<Application> GetAll(int userID){
 		Vector<Application> list=new Vector<Application>();
 		for(Application a:Application.getAll()) {
-			if(a.applicationID==applicationID)
+			if(a.userID==userID)
 				list.add(a);
 		}
 		return list;
@@ -47,13 +47,12 @@ public class ApplicationHandler {
 			if(a.name==name)
 				return a;
 		}
-		return null;}
+		return null;
 
-		public static Application getJob(int ApplicationID) {
-			for(Application a : GetAll()) {
-				if(a.applicationID==ApplicationID) 
-					return a;
-			}
-			return null;
+//		public static Application getAll(int ApplicationID) {
+//			for(Application a : GetAll()) {
+//				if(a.applicationID==ApplicationID) 
+//					return a;
+//			}
 		}
 	}

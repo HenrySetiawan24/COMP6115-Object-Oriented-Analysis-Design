@@ -38,7 +38,7 @@ public class ViewJobs extends JFrame{
 	JLabel idLbl,idValue,nameLbl,descLbl,reqLbl,roleLbl,uidLbl,jidLbl;
 	JLabel adidLbl,adnameLbl,addescLbl;
 	JTextField nameTxt,descTxt,reqTxt,roleTxt,uidTxt,jidTxt;
-	JButton insert,update,delete;
+	JButton apply;
 	
 	Vector<Vector<String>> data;
 	Vector<Vector<String>> addata;
@@ -73,8 +73,8 @@ public class ViewJobs extends JFrame{
 		reqLbl = new JLabel("Req:");
 		roleLbl = new JLabel("Role:");
 		idValue = new JLabel("-");
-		uidLbl = new JLabel("User ID:");
-		jidLbl = new JLabel("Job ID:");
+//		uidLbl = new JLabel("User ID:");
+//		jidLbl = new JLabel("Job ID:");
 		
 		adnameLbl = new JLabel("AD:");
 		addescLbl = new JLabel("Desc:");
@@ -85,10 +85,12 @@ public class ViewJobs extends JFrame{
 		roleTxt = new JTextField();
 		uidTxt = new JTextField();
 		jidTxt = new JTextField();
+//		
+//		insert = new JButton("Insert");
+//		update = new JButton("Update");
+//		delete = new JButton("Delete");
 		
-		insert = new JButton("Insert");
-		update = new JButton("Update");
-		delete = new JButton("Delete");
+		apply = new JButton("Apply");
 		
 		//SELECT row
 		table.addMouseListener(new MouseListener() {
@@ -122,12 +124,12 @@ public class ViewJobs extends JFrame{
 				// TODO Auto-generated method stub
 				int row = table.getSelectedRow();
 				idValue.setText(table.getValueAt(row, 0).toString()+"");
-				uidTxt.setText(table.getValueAt(row, 1).toString()+"");
-				jidTxt.setText(table.getValueAt(row, 2).toString()+"");
-				nameTxt.setText(table.getValueAt(row, 3).toString()+""); 
-				descTxt.setText(table.getValueAt(row, 4).toString()+"");
-				reqTxt.setText(table.getValueAt(row, 5).toString()+"");
-				roleTxt.setText(table.getValueAt(row, 6).toString()+"");
+//				uidTxt.setText(table.getValueAt(row, 1).toString()+"");
+//				jidTxt.setText(table.getValueAt(row, 2).toString()+"");
+				nameTxt.setText(table.getValueAt(row, 1).toString()+""); 
+				descTxt.setText(table.getValueAt(row, 2).toString()+"");
+				reqTxt.setText(table.getValueAt(row, 3).toString()+"");
+				roleTxt.setText(table.getValueAt(row, 4).toString()+"");
 				
 //				JobIDTxt.setText(dataTable.getValueAt(row, 0).toString()+"");
 //				CompanyIDTxt.setText(dataTable.getValueAt(row, 1).toString()+"");
@@ -137,91 +139,29 @@ public class ViewJobs extends JFrame{
 			}
 		});
 		
-		//INSERT button
-		insert.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				Integer applicationID = 0;
-				String name = nameTxt.getText();
-				String desc = descTxt.getText();
-				String req = reqTxt.getText();
-				String role = roleTxt.getText();
-				Integer uid = 0;
-				Integer jid = 0;
-				
-				try {
-					uid = Integer.parseInt(uidTxt.getText());
-					jid = Integer.parseInt(jidTxt.getText());
-				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(null, "ID must be integer");
-					return; 
-			}
-				
-			ApplicationHandler.insert(uid, jid, name, desc, req, role);
-//			loadData(con.execQuery("SELECT * FROM application"));
-			loadData(applicationID);
-			}
-		});
-		
-		//UPDATE button
-		update.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String name = nameTxt.getText();
-				String desc = descTxt.getText();
-				String req = reqTxt.getText();
-				String role = roleTxt.getText();
-				Integer aid = 0;
-				Integer uid = 0;
-				Integer jid = 0;
-				try {
-					uid = Integer.parseInt(uidTxt.getText());
-					jid = Integer.parseInt(jidTxt.getText());
-					aid = Integer.parseInt(idValue.getText());
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "ID must be integer");
-					return; 
-				}
-				
-				ApplicationHandler.update(aid, uid, jid, name, desc, req, role);
-//				loadData(con.execQuery("SELECT * FROM application"));
-				loadData(aid);
-				
-			}
-		});
-		
-		//DELETE button
-		delete.addActionListener(new ActionListener() {
+		//APPLY Button
+		apply.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				int aid = 0;
-				try {
-					aid = Integer.parseInt(idValue.getText());
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "ID must be integer");
-					return; 
-				}
-				
-				ApplicationHandler.delete(aid);
-//				loadData(con.execQuery("SELECT * FROM application"));
-				loadData(aid);
-
-				
 			}
 		});
+		
+		
+		
+		
+
+		
+
 		
 		
 //		sp.setPreferredSize(500,500);
 		
 		//Randomize Advertisement
 		Random random = new Random();
-		int adID = random.nextInt(addetail.size());
+		int adID = random.nextInt(AdvertisementHandler.GetAll().size());
 		
 		loadadData(adID);
 		
@@ -247,9 +187,10 @@ public class ViewJobs extends JFrame{
 		mid.add(roleTxt);
 		
 		
-		bot.add(insert);
-		bot.add(update);
-		bot.add(delete);
+
+		bot.add(apply);
+		
+		loadData(0);
 		
 		add(top,BorderLayout.NORTH);
 		add(mid,BorderLayout.CENTER);
@@ -273,9 +214,9 @@ public class ViewJobs extends JFrame{
 			addetail = new Vector<>();
 			
 			addetail.add(a.advertisementID+"");
-			addetail.add(a.companyID+"");
+//			addetail.add(a.companyID+"");
 			addetail.add(a.title+"");
-			addetail.add(a.description+"");
+//			addetail.add(a.description+"");
 
 			
 			addata.add(addetail);
@@ -286,13 +227,13 @@ public class ViewJobs extends JFrame{
 		adtable.setModel(addtm);
 	}
 	
-	private void loadData(Integer applicationID) {
+	private void loadData(Integer userID) {
 		header = new Vector<>();
 		data = new Vector<>();
 		
 		header.add("Job ID");
-		header.add("User ID");
-		header.add("Company ID");
+//		header.add("User ID");
+//		header.add("Company ID");
 		header.add("Job Desc");
 		header.add("Job Req");
 		header.add("Job Role");
@@ -301,12 +242,12 @@ public class ViewJobs extends JFrame{
 		if(data==null)data = new Vector<>();
 		else data.clear();
 		
-		for(Application a : ApplicationHandler.GetAll(applicationID)) {
+		for(Application a : ApplicationHandler.GetAll(userID)) {
 			detail = new Vector<>();
 			
 			detail.add(a.applicationID+"");
-			detail.add(a.userID+"");
-			detail.add(a.jobID+"");
+//			detail.add(a.userID+"");
+//			detail.add(a.jobID+"");
 			detail.add(a.name+"");
 			detail.add(a.cvdescription+"");
 			detail.add(a.transcriptdescription+"");
