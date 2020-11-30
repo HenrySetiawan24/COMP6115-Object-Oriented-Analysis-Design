@@ -6,6 +6,7 @@ import Model.User;
 import View.LoginView;
 import View.RegistrationView;
 import View.UserMenu;
+import View.WishlistView;
 
 public class UserHandler {
 	
@@ -52,7 +53,7 @@ public class UserHandler {
 	}
 	
 	public static void viewWishList(int userID) {
-//		new WishlistView(userID);
+		new WishlistView(userID);
 	}
 	
 	public static User getOne(String email, String password) {

@@ -36,7 +36,7 @@ public class UserMenu extends JFrame{
 				// TODO Auto-generated method stub
 				dispose();
 				JOptionPane.showMessageDialog(null, "NotYetImplemented");
-//				UserHandler.viewWishList(userID);
+//				UserHandler.viewJobs(userID);
 			}
 		});
 		WishListBtn.addActionListener(new ActionListener() {
@@ -44,8 +44,7 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				JOptionPane.showMessageDialog(null, "NotYetImplemented");
-//				UserHandler.viewJobs(userID);
+				UserHandler.viewWishList(userID);
 			}
 		});
 		
