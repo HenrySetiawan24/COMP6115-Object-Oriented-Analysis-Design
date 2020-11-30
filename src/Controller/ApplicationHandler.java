@@ -4,6 +4,7 @@ import java.util.Vector;
 
 //import Model.Advertisement;
 import Model.Application;
+import Model.Job;
 import View.EditAdvertisement;
 import View.ViewJobs;
 //import View.EditAdvertisement;
@@ -46,9 +47,13 @@ public class ApplicationHandler {
 			if(a.name==name)
 				return a;
 		}
-		return null;
-//		}
-//	public static void viewJobs(int applicationID) {
-//		new ViewJobs(applicationID);
-//	}
+		return null;}
+
+		public static Application getJob(int ApplicationID) {
+			for(Application a : GetAll()) {
+				if(a.applicationID==ApplicationID) 
+					return a;
+			}
+			return null;
+		}
 	}

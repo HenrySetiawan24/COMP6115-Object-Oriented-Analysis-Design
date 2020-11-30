@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -22,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
+import Model.Advertisement;
+import Model.Application;
 import Model.Connect;
 
 public class ViewJobs extends JFrame{
@@ -36,6 +39,7 @@ public class ViewJobs extends JFrame{
 	JLabel adidLbl,adnameLbl,addescLbl;
 	JTextField nameTxt,descTxt,reqTxt,roleTxt,uidTxt,jidTxt;
 	JButton insert,update,delete;
+	
 	Vector<Vector<String>> data;
 	Vector<Vector<String>> addata;
 
@@ -137,6 +141,7 @@ public class ViewJobs extends JFrame{
 		insert.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				Integer applicationID = 0;
 				String name = nameTxt.getText();
 				String desc = descTxt.getText();
 				String req = reqTxt.getText();
@@ -153,7 +158,8 @@ public class ViewJobs extends JFrame{
 			}
 				
 			ApplicationHandler.insert(uid, jid, name, desc, req, role);
-			loadData(con.execQuery("SELECT * FROM application"));
+//			loadData(con.execQuery("SELECT * FROM application"));
+			loadData(applicationID);
 			}
 		});
 		
@@ -180,7 +186,8 @@ public class ViewJobs extends JFrame{
 				}
 				
 				ApplicationHandler.update(aid, uid, jid, name, desc, req, role);
-				loadData(con.execQuery("SELECT * FROM application"));
+//				loadData(con.execQuery("SELECT * FROM application"));
+				loadData(aid);
 				
 			}
 		});
@@ -202,7 +209,9 @@ public class ViewJobs extends JFrame{
 				}
 				
 				ApplicationHandler.delete(aid);
-				loadData(con.execQuery("SELECT * FROM application"));
+//				loadData(con.execQuery("SELECT * FROM application"));
+				loadData(aid);
+
 				
 			}
 		});
@@ -211,17 +220,11 @@ public class ViewJobs extends JFrame{
 //		sp.setPreferredSize(500,500);
 		
 		//Randomize Advertisement
-		int rowcount = adtable.getRowCount();
-		int min = 1;
-		int range = rowcount - min + 1;
-		int random = 0;
-		for(int i = 0 ; i < rowcount; i++ )
-		{
-			 random = (int)(Math.random() * range ) + min; 
-		}
-		loadData(con.execQuery("SELECT * FROM application"));
-//		
-		loadadData(con.execQuery("SELECT * FROM advertisement WHERE advertisementID = "+random));
+		Random random = new Random();
+		int adID = random.nextInt(addetail.size());
+		
+		loadadData(adID);
+		
 		
 		top.add(sp);
 		top.add(adsp);
@@ -256,66 +259,89 @@ public class ViewJobs extends JFrame{
 
 	}
 	
-	private void loadadData(ResultSet rs) {
+	private void loadadData(Integer advertisementID) {
 		adheader = new Vector<>();
 		addata = new Vector<>();
 		
 		adheader.add("AD");
 		adheader.add("AD Desc");
 		
-		try {
-			while(rs.next()) {
-				String name = rs.getString("tittle");
-				String desc = rs.getString("description");
-				
-				addetail = new Vector<>();
-				addetail.add(name);
-				addetail.add(desc);
-				
-				addata.add(addetail);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(addata==null)addata = new Vector<>();
+		else addata.clear();
+		
+		Advertisement a = AdvertisementHandler.GetAll().elementAt(advertisementID); 
+			addetail = new Vector<>();
+			
+			addetail.add(a.advertisementID+"");
+			addetail.add(a.companyID+"");
+			addetail.add(a.title+"");
+			addetail.add(a.description+"");
+
+			
+			addata.add(addetail);
+			
+		
 		
 		DefaultTableModel addtm = new DefaultTableModel(addata, adheader);
 		adtable.setModel(addtm);
 	}
 	
-	private void loadData(ResultSet rs) {
+	private void loadData(Integer applicationID) {
 		header = new Vector<>();
 		data = new Vector<>();
 		
 		header.add("Job ID");
+		header.add("User ID");
+		header.add("Company ID");
 		header.add("Job Desc");
 		header.add("Job Req");
 		header.add("Job Role");
 		header.add("Job Type");
 		
-		try {
-			while(rs.next())
-			{
-				Integer id = rs.getInt("applicationID");
-				String name = rs.getString("name");
-				String desc = rs.getString("cvdescription");
-				String req = rs.getString("transcriptdescription");
-				String type = rs.getString("type");
-				
-				detail = new Vector<>();
-				detail.add(id+"");
-				detail.add(name);
-				detail.add(desc);
-				detail.add(req);
-				detail.add(type);
-				
-				data.add(detail);
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(data==null)data = new Vector<>();
+		else data.clear();
+		
+		for(Application a : ApplicationHandler.GetAll(applicationID)) {
+			detail = new Vector<>();
+			
+			detail.add(a.applicationID+"");
+			detail.add(a.userID+"");
+			detail.add(a.jobID+"");
+			detail.add(a.name+"");
+			detail.add(a.cvdescription+"");
+			detail.add(a.transcriptdescription+"");
+			detail.add(a.type+"");
+			
+			data.add(detail);
+			
 		}
+//		try {
+//			while(rs.next())
+//			{
+//				Integer id = rs.getInt("applicationID");
+//				Integer uid = rs.getInt("userID");
+//				Integer jid = rs.getInt("jobID");
+//				String name = rs.getString("name");
+//				String desc = rs.getString("cvdescription");
+//				String req = rs.getString("transcriptdescription");
+//				String type = rs.getString("type");
+//				
+//				detail = new Vector<>();
+//				detail.add(id+"");
+//				detail.add(uid+"");
+//				detail.add(jid+"");
+//				detail.add(name);
+//				detail.add(desc);
+//				detail.add(req);
+//				detail.add(type);
+//				
+//				data.add(detail);
+//
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		DefaultTableModel dtm = new DefaultTableModel(data, header) {
 			@Override
