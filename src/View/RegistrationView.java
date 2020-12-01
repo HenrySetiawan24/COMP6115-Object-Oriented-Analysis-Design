@@ -29,7 +29,7 @@ public class RegistrationView extends JFrame{
 	JTextField nameTxt, emailTxt, passwordTxt, phoneNumberTxt;
 	JTextArea addressTxt;
 	JComboBox<String> roleBox;
-	JButton registerBtn;
+	JButton registerBtn, Back;
 	
 	Vector<String> roleList;
 
@@ -37,7 +37,7 @@ public class RegistrationView extends JFrame{
 		setTitle("Register Page");
 		
 		top = new JPanel(new FlowLayout());
-		GridLayout gl = new GridLayout(6, 2);
+		GridLayout gl = new GridLayout(12, 2);
 		mid = new JPanel(gl);
 		bot = new JPanel(new FlowLayout());
 		
@@ -64,15 +64,18 @@ public class RegistrationView extends JFrame{
 		roleBox = new JComboBox<>(roleList);
 		
 		registerBtn = new JButton("Register");
+		Back = new JButton("Back");
 		registerBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!roleBox.getSelectedItem().toString().equals("Company") && UserHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText(), roleBox.getSelectedItem().toString()) == true) {
 					JOptionPane.showMessageDialog(null, "Registration Sukses");
+					UserHandler.viewLogin();
 				}
 				else if(roleBox.getSelectedItem().toString().equals("Company") && CompanyHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText()) == true) {
 					JOptionPane.showMessageDialog(null, "Registration Sukses");
+					UserHandler.viewLogin();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Registration Gagal, Data Invalid");
@@ -80,7 +83,15 @@ public class RegistrationView extends JFrame{
 				
 			}
 		});
-		
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				UserHandler.logOut();
+				dispose();
+			}
+		});
 		top.add(titleLbl);
 		
 		mid.add(nameLbl);
@@ -99,6 +110,7 @@ public class RegistrationView extends JFrame{
 		mid.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
 		bot.add(registerBtn);
+		bot.add(Back);
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);

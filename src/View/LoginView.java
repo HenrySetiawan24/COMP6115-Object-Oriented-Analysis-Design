@@ -27,7 +27,7 @@ public class LoginView extends JFrame{
 	JLabel titleLbl, emailLbl, passwordLbl, roleLbl;
 	JTextField emailTxt, passwordTxt;
 	JComboBox<String> roleBox;
-	JButton loginBtn;
+	JButton loginBtn, Back;
 	
 	Vector<String> roleList;
 	
@@ -43,7 +43,7 @@ public class LoginView extends JFrame{
 		setTitle("Login Page");
 		
 		top = new JPanel(new FlowLayout());
-		GridLayout gl = new GridLayout(3, 2);
+		GridLayout gl = new GridLayout(12, 2);
 		mid = new JPanel(gl);
 		bot = new JPanel(new FlowLayout());
 		
@@ -62,6 +62,7 @@ public class LoginView extends JFrame{
 		roleBox = new JComboBox<>(roleList);
 		
 		loginBtn = new JButton("Login");
+		Back = new JButton("Back");
 		loginBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -82,6 +83,15 @@ public class LoginView extends JFrame{
 				}
 			}
 		});
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				UserHandler.logOut();
+				dispose();
+			}
+		});
 		
 		top.add(titleLbl);
 		
@@ -93,6 +103,7 @@ public class LoginView extends JFrame{
 		mid.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
 		bot.add(loginBtn);
+		bot.add(Back);
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);

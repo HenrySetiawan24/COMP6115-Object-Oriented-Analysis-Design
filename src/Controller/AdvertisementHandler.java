@@ -3,6 +3,7 @@ package Controller;
 import java.util.Vector;
 
 import Model.Advertisement;
+import Model.Job;
 import View.EditAdvertisement;
 
 public class AdvertisementHandler {
@@ -48,5 +49,13 @@ public class AdvertisementHandler {
 	
 	public static void viewAdvertisementMenu(int companyID) {
 		new EditAdvertisement(companyID);
+	}
+	
+	public static Advertisement getAdvertisement(int advertisementID) {
+		for(Advertisement a : GetAll()) {
+			if(a.advertisementID==advertisementID) 
+				return a;
+		}
+		return null;
 	}
 }

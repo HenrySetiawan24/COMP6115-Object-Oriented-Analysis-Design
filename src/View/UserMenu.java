@@ -13,43 +13,86 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Controller.ApplicationHandler;
+import Controller.ApprovementHandler;
+import Controller.JobHandler;
 import Controller.UserHandler;
 
 @SuppressWarnings("serial")
 public class UserMenu extends JFrame{
 	JLabel Title;
-	JButton ViewJobsBtn, WishListBtn;
+	JButton ViewJobsBtn, WishListBtn, ApplicationsBtn, LogoutBtn, ApprovedBtn;
 	JPanel mainFrame, contentFrame;
 	
 	public UserMenu(int userID) {
 		init();
 		mainFrame = new JPanel(new BorderLayout());
-		contentFrame = new JPanel(new GridLayout(2, 1, 1, 50));
+		contentFrame = new JPanel(new GridLayout(5, 1, 1, 15));
 		
 		Title = new JLabel("Welcome "+UserHandler.getUser(userID).name+"! What would you like to do?");
 
 		ViewJobsBtn = new JButton("View Jobs");
 		WishListBtn = new JButton("Your Wishlist");
+		ApplicationsBtn = new JButton("Your Applications");
+		ApprovedBtn = new JButton("Your Approved Jobs");
+		LogoutBtn = new JButton("Logout");
 		ViewJobsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+<<<<<<< HEAD
 				dispose();
 				JOptionPane.showMessageDialog(null, "NotYetImplemented");
 //				UserHandler.viewJobs(userID);
+=======
+				JobHandler.viewJobs(userID);
+>>>>>>> 765d26febb1a6a597815e25ff46ffc49f2e340c3
 			}
 		});
 		WishListBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				dispose();
-				UserHandler.viewWishList(userID);
+				JOptionPane.showMessageDialog(null, "NotYetImplemented");//remove when done
+//				WishListHandler.viewWishList(userID);
 			}
 		});
-		
-		contentFrame.add(ViewJobsBtn);
-		contentFrame.add(WishListBtn);
+		ApplicationsBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ApplicationHandler.viewApplications(userID);
+			}
+		});
+		ApprovedBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ApprovementHandler.viewApprovements(userID);
+			}
+		});
+		LogoutBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+<<<<<<< HEAD
+				UserHandler.viewWishList(userID);
+=======
+				UserHandler.logOut();
+>>>>>>> 765d26febb1a6a597815e25ff46ffc49f2e340c3
+			}
+		});
+		if(UserHandler.getUser(userID).role.compareTo("Staff")==0) {
+			ApprovedBtn.setText("Approvements");
+			contentFrame.add(ApprovedBtn);
+		}else {
+			contentFrame.add(ViewJobsBtn);
+			contentFrame.add(WishListBtn);
+			contentFrame.add(ApplicationsBtn);
+			contentFrame.add(LogoutBtn);
+			contentFrame.add(ApprovedBtn);
+		}
 		contentFrame.setBorder(new EmptyBorder(200, 300, 200, 300));
 		
 		mainFrame.add(Title, BorderLayout.NORTH);
