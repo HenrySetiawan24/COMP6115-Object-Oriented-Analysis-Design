@@ -109,9 +109,19 @@ public class ViewJobs extends JFrame{
 					return;
 				}
 				if(UserHandler.getUser(UserID).role.compareTo("Student")==0) {
-					ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Intern");}
+					if(ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Intern")) {
+						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+					}else {
+						JOptionPane.showMessageDialog(null, "ApplicationFailed");
+					}
+				}
 				else if(UserHandler.getUser(UserID).role.compareTo("Employee")==0) {
-					ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Job");}
+					if(ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Job")) {
+						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+					}else {
+						JOptionPane.showMessageDialog(null, "ApplicationFailed");
+					}
+				}
 				
 				loadData(UserID);
 			}

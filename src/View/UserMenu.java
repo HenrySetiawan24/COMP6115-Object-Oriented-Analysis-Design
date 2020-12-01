@@ -14,27 +14,28 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.ApplicationHandler;
+import Controller.ApprovementHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
 
 @SuppressWarnings("serial")
 public class UserMenu extends JFrame{
 	JLabel Title;
-	JButton ViewJobsBtn, WishListBtn, ApplicationsBtn, LogoutBtn;
+	JButton ViewJobsBtn, WishListBtn, ApplicationsBtn, LogoutBtn, ApprovedBtn;
 	JPanel mainFrame, contentFrame;
 	
 	public UserMenu(int userID) {
 		init();
 		mainFrame = new JPanel(new BorderLayout());
-		contentFrame = new JPanel(new GridLayout(4, 1, 1, 15));
+		contentFrame = new JPanel(new GridLayout(5, 1, 1, 15));
 		
 		Title = new JLabel("Welcome "+UserHandler.getUser(userID).name+"! What would you like to do?");
 
 		ViewJobsBtn = new JButton("View Jobs");
 		WishListBtn = new JButton("Your Wishlist");
 		ApplicationsBtn = new JButton("Your Applications");
+		ApprovedBtn = new JButton("Your Approved Jobs");
 		LogoutBtn = new JButton("Logout");
-		
 		ViewJobsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -57,6 +58,13 @@ public class UserMenu extends JFrame{
 				ApplicationHandler.viewApplications(userID);
 			}
 		});
+		ApprovedBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ApprovementHandler.viewApprovements(userID);
+			}
+		});
 		LogoutBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -65,11 +73,16 @@ public class UserMenu extends JFrame{
 				UserHandler.logOut();
 			}
 		});
-		
-		contentFrame.add(ViewJobsBtn);
-		contentFrame.add(WishListBtn);
-		contentFrame.add(ApplicationsBtn);
-		contentFrame.add(LogoutBtn);
+		if(UserHandler.getUser(userID).role.compareTo("Staff")==0) {
+			ApprovedBtn.setText("Approvements");
+			contentFrame.add(ApprovedBtn);
+		}else {
+			contentFrame.add(ViewJobsBtn);
+			contentFrame.add(WishListBtn);
+			contentFrame.add(ApplicationsBtn);
+			contentFrame.add(LogoutBtn);
+			contentFrame.add(ApprovedBtn);
+		}
 		contentFrame.setBorder(new EmptyBorder(200, 300, 200, 300));
 		
 		mainFrame.add(Title, BorderLayout.NORTH);

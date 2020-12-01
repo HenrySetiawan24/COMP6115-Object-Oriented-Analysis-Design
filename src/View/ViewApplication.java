@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ApplicationHandler;
+import Controller.ApprovementHandler;
+import Controller.CompanyHandler;
 import Controller.UserHandler;
 import Model.Application;
 
@@ -32,7 +34,7 @@ public class ViewApplication extends JFrame{
 	JLabel applicationIDLbl, jobIDLbl, nameLabel, CVLabel, transcriptLbl, applicationIDTxt, jobIDTxt;
 	JLabel adidLbl,adnameLbl,addescLbl;
 	JTextField nameTxt, CVTxt, TranscriptTxt;
-	JButton update, delete, Back;
+	JButton update, delete, Back, Approve;
 	
 	Vector<Vector<String>> data;
 
@@ -74,6 +76,7 @@ public class ViewApplication extends JFrame{
 		update = new JButton("Update");
 		delete = new JButton("Delete");
 		Back = new JButton("Back");
+		Approve = new JButton("Approve");
 		update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -128,6 +131,22 @@ public class ViewApplication extends JFrame{
 				loadData(UserID);
 			}
 		});
+		Approve.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				int ApplicationID;
+				try {
+					ApplicationID=Integer.parseInt(applicationIDTxt.getText());
+				}catch (NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Select an application to Edit!");
+					return;
+				}
+				
+				ApprovementHandler.Insert(ApplicationID);
+			}
+		});
 		Back.addActionListener(new ActionListener() {
 			
 			@Override
@@ -178,16 +197,20 @@ public class ViewApplication extends JFrame{
 		});
 			
 		top.add(sp);
-		
-		mid.add(nameLabel);
-		mid.add(nameTxt);
-		mid.add(CVLabel);
-		mid.add(CVTxt);
-		mid.add(transcriptLbl);
-		mid.add(TranscriptTxt);
-		
-		bot.add(update);
-		bot.add(delete);
+				
+		if(CompanyHandler.getCompany(UserID)!=null) {
+			bot.add(Approve);
+		}else {
+			mid.add(nameLabel);
+			mid.add(nameTxt);
+			mid.add(CVLabel);
+			mid.add(CVTxt);
+			mid.add(transcriptLbl);
+			mid.add(TranscriptTxt);
+			
+			bot.add(update);
+			bot.add(delete);
+		}
 		bot.add(Back);
 		
 		add(top,BorderLayout.NORTH);
@@ -210,19 +233,32 @@ public class ViewApplication extends JFrame{
 		
 		if(data==null)data = new Vector<>();
 		else data.clear();
-		
-		for(Application a : ApplicationHandler.GetAll(UserID)) {
-			detail = new Vector<>();
-			
-			detail.add(a.applicationID+"");
-			detail.add(a.jobID+"");
-			detail.add(a.name+"");
-			detail.add(a.cvdescription+"");
-			detail.add(a.transcriptdescription+"");
-			detail.add(a.type+"");
-			
-			data.add(detail);
-		}
+		if(UserHandler.getRole(UserID).compareTo("Staff")==0)
+			for(Application a : ApplicationHandler.GetAll()) {
+				detail = new Vector<>();
+				
+				detail.add(a.applicationID+"");
+				detail.add(a.jobID+"");
+				detail.add(a.name+"");
+				detail.add(a.cvdescription+"");
+				detail.add(a.transcriptdescription+"");
+				detail.add(a.type+"");
+				
+				data.add(detail);
+			}
+		else
+			for(Application a : ApplicationHandler.GetAll(UserID)) {
+				detail = new Vector<>();
+				
+				detail.add(a.applicationID+"");
+				detail.add(a.jobID+"");
+				detail.add(a.name+"");
+				detail.add(a.cvdescription+"");
+				detail.add(a.transcriptdescription+"");
+				detail.add(a.type+"");
+				
+				data.add(detail);
+			}
 		
 		DefaultTableModel dtm = new DefaultTableModel(data, header) {
 			@Override
