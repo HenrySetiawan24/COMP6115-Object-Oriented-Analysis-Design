@@ -71,9 +71,11 @@ public class RegistrationView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(!roleBox.getSelectedItem().toString().equals("Company") && UserHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText(), roleBox.getSelectedItem().toString()) == true) {
 					JOptionPane.showMessageDialog(null, "Registration Sukses");
+					UserHandler.viewLogin();
 				}
 				else if(roleBox.getSelectedItem().toString().equals("Company") && CompanyHandler.createAccount(nameTxt.getText(), emailTxt.getText(), passwordTxt.getText(), addressTxt.getText(), phoneNumberTxt.getText()) == true) {
 					JOptionPane.showMessageDialog(null, "Registration Sukses");
+					UserHandler.viewLogin();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Registration Gagal, Data Invalid");

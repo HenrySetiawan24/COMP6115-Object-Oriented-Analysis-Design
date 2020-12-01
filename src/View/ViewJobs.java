@@ -22,9 +22,11 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
+import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
 import Model.Advertisement;
+import Model.Internship;
 import Model.Job;
 
 public class ViewJobs extends JFrame{
@@ -106,13 +108,12 @@ public class ViewJobs extends JFrame{
 					JOptionPane.showMessageDialog(null, "Transcript Description Must be Filled!");
 					return;
 				}
-				System.out.println(UserHandler.getRole(UserID));
 				if(UserHandler.getUser(UserID).role.compareTo("Student")==0) {
 					ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Intern");}
 				else if(UserHandler.getUser(UserID).role.compareTo("Employee")==0) {
 					ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Job");}
 				
-				loadData();
+				loadData(UserID);
 			}
 		});
 		Back.addActionListener(new ActionListener() {
@@ -180,7 +181,7 @@ public class ViewJobs extends JFrame{
 		bot.add(apply);
 		bot.add(Back);
 		
-		loadData();
+		loadData(UserID);
 		
 		add(top,BorderLayout.NORTH);
 		add(mid,BorderLayout.CENTER);
@@ -212,30 +213,40 @@ public class ViewJobs extends JFrame{
 		adtable.setModel(addtm);
 	}
 	
-	private void loadData() {
+	private void loadData(int UserID) {
 		header = new Vector<>();
 		data = new Vector<>();
 		
 		header.add("Job ID");
 		header.add("Job Name");
 		header.add("Job Desc");
-		header.add("Job Salary");
+		if(UserHandler.getRole(UserID).compareTo("Student")!=0)
+			header.add("Job Salary");
 		
 		if(data==null)data = new Vector<>();
 		else data.clear();
-		
-		for(Job j : JobHandler.GetAll()) {
-			detail = new Vector<>();
-			
-			detail.add(j.jobID+"");
-			detail.add(j.name+"");
-			detail.add(j.description+"");
-			detail.add(j.salary+"");
-			
-			data.add(detail);
-			
-		}
-		
+		if(UserHandler.getRole(UserID).compareTo("Student")!=0)
+			for(Job j : JobHandler.GetAll()) {
+				detail = new Vector<>();
+				
+				detail.add(j.jobID+"");
+				detail.add(j.name+"");
+				detail.add(j.description+"");
+				detail.add(j.salary+"");
+				
+				data.add(detail);
+				
+			}
+		else
+			for(Internship j : InternshipHandler.GetAll()) {
+				detail = new Vector<>();
+				
+				detail.add(j.jobID+"");
+				detail.add(j.name+"");
+				detail.add(j.description+"");
+				
+				data.add(detail);
+			}
 		DefaultTableModel dtm = new DefaultTableModel(data, header) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
