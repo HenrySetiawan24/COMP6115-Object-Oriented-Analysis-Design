@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,41 +17,38 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.ApplicationHandler;
+import Controller.UserHandler;
 import Model.Application;
-import Model.Connect;
 
 public class ViewApplication extends JFrame{
 	
-	Connect con = new Connect();
 	JPanel top,mid,bot,left;
 	JTable table;
 	JTable adtable;
 	JScrollPane sp;
-	JScrollPane adsp;
-	JLabel idLbl,idValue,nameLbl,descLbl,reqLbl,roleLbl,uidLbl,jidLbl;
+	JLabel applicationIDLbl, jobIDLbl, nameLabel, CVLabel, transcriptLbl, applicationIDTxt, jobIDTxt;
 	JLabel adidLbl,adnameLbl,addescLbl;
-	JTextField nameTxt,descTxt,reqTxt,roleTxt,uidTxt,jidTxt;
-	JButton insert,update,delete;
+	JTextField nameTxt, CVTxt, TranscriptTxt;
+	JButton update, delete;
 	
 	Vector<Vector<String>> data;
 
 	Vector<String> detail,header;
 
-	public ViewApplication() {
-		init();
+	public ViewApplication(int UserID) {
+		init(UserID);
 		setSize(900,600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 
-	
-
-	private void init() {
+	private void init(int UserID) {
 		top = new JPanel();
-		mid = new JPanel(new GridLayout(7,7));
+		mid = new JPanel(new GridLayout(3,2));
 		bot = new JPanel();
 		left = new JPanel();
 		
@@ -58,26 +56,24 @@ public class ViewApplication extends JFrame{
 		adtable = new JTable();
 		
 		sp = new JScrollPane(table);
+		sp.setPreferredSize(new Dimension(850, 300));
 		
-		idLbl = new JLabel("ID:");
-		nameLbl = new JLabel("Name:");
-		descLbl = new JLabel("Desc:");
-		reqLbl = new JLabel("Req:");
-		roleLbl = new JLabel("Role:");
-		idValue = new JLabel("-");
-		uidLbl = new JLabel("User ID:");
-		jidLbl = new JLabel("Job ID:");
+		applicationIDLbl = new JLabel("ID:");
+		jobIDLbl = new JLabel("Desc:");
+		nameLabel = new JLabel("Name:");
+		CVLabel = new JLabel("CV Description:");
+		transcriptLbl = new JLabel("Transcript:");
 		
+		applicationIDTxt = new JLabel("");
+		jobIDTxt = new JLabel("");
 		nameTxt = new JTextField();
-		descTxt = new JTextField();
-		reqTxt = new JTextField();
-		roleTxt = new JTextField();
-		uidTxt = new JTextField();
-		jidTxt = new JTextField();
+		CVTxt = new JTextField();
+		TranscriptTxt = new JTextField();
 		
-		insert = new JButton("Insert");
 		update = new JButton("Update");
 		delete = new JButton("Delete");
+		
+		loadData(UserID);	
 		
 		//SELECT row
 		table.addMouseListener(new MouseListener() {
@@ -110,125 +106,84 @@ public class ViewApplication extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				int row = table.getSelectedRow();
-				idValue.setText(table.getValueAt(row, 0).toString()+"");
-				uidTxt.setText(table.getValueAt(row, 1).toString()+"");
-				jidTxt.setText(table.getValueAt(row, 2).toString()+"");
-				nameTxt.setText(table.getValueAt(row, 3).toString()+""); 
-				descTxt.setText(table.getValueAt(row, 4).toString()+"");
-				reqTxt.setText(table.getValueAt(row, 5).toString()+"");
-				roleTxt.setText(table.getValueAt(row, 6).toString()+"");
 				
-//				JobIDTxt.setText(dataTable.getValueAt(row, 0).toString()+"");
-//				CompanyIDTxt.setText(dataTable.getValueAt(row, 1).toString()+"");
-//				NameTxt.setText(dataTable.getValueAt(row, 2).toString()+"");
-//				DescriptionTxt.setText(dataTable.getValueAt(row, 3).toString()+"");
-//				SalaryTxt.setText(dataTable.getValueAt(row, 4).toString()+"");
+				applicationIDTxt.setText(table.getValueAt(row, 0).toString()+"");
+				jobIDTxt.setText(table.getValueAt(row, 1).toString()+"");
+				nameTxt.setText(table.getValueAt(row, 2).toString()+"");
+				CVTxt.setText(table.getValueAt(row, 3).toString()+"");
+				TranscriptTxt.setText(table.getValueAt(row, 4).toString()+"");
 			}
 		});
-		
-		//INSERT button
-				insert.addActionListener(new ActionListener() {
-
-					public void actionPerformed(ActionEvent e) {
-						Integer applicationID = 0;
-						String name = nameTxt.getText();
-						String desc = descTxt.getText();
-						String req = reqTxt.getText();
-						String role = roleTxt.getText();
-						Integer uid = 0;
-						Integer jid = 0;
-						
-						try {
-							uid = Integer.parseInt(uidTxt.getText());
-							jid = Integer.parseInt(jidTxt.getText());
-						} catch (NumberFormatException e1) {
-							JOptionPane.showMessageDialog(null, "ID must be integer");
-							return; 
-					}
-						
-					ApplicationHandler.insert(uid, jid, name, desc, req, role);
-//					loadData(con.execQuery("SELECT * FROM application"));
-					loadData(uid);
-					}
-				});
-				
-		//DELETE button
-		delete.addActionListener(new ActionListener() {
-			
+		update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-				int aid = 0;
+				int ApplicationID, JobID;
 				try {
-					aid = Integer.parseInt(idValue.getText());
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "ID must be integer");
-					return; 
+					ApplicationID=Integer.parseInt(applicationIDTxt.getText());
+					JobID=Integer.parseInt(jobIDTxt.getText());
+				}catch (NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Select an application to Edit!");
+					return;
 				}
 				
-				ApplicationHandler.delete(aid);
-//						loadData(con.execQuery("SELECT * FROM application"));
-				loadData(aid);
-
+				String Name=nameTxt.getText();
+				if(Name.length()<1) {
+					JOptionPane.showMessageDialog(null, "Name Must be Filled!");
+					return;
+				}
 				
+				String CVDesc=CVTxt.getText();
+				if(CVDesc.length()<1) {
+					JOptionPane.showMessageDialog(null, "CV Description Must be Filled!");
+					return;
+				}
+				
+				String TranscriptDesc=TranscriptTxt.getText();
+				if(TranscriptDesc.length()<1) {
+					JOptionPane.showMessageDialog(null, "Transcript Description Must be Filled!");
+					return;
+				}
+				if(UserHandler.getRole(UserID).compareTo("Student")==0) {
+					ApplicationHandler.update(ApplicationID, UserID, JobID, Name, CVDesc, TranscriptDesc, "Intern");}
+				else if(UserHandler.getRole(UserID).compareTo("Employee")==0) {
+					ApplicationHandler.update(ApplicationID, UserID, JobID, Name, CVDesc, TranscriptDesc, "Job");}
+				
+				loadData(UserID);
 			}
 		});
-		
-		//UPDATE button
-		update.addActionListener(new ActionListener() {
-			
+		delete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String name = nameTxt.getText();
-				String desc = descTxt.getText();
-				String req = reqTxt.getText();
-				String role = roleTxt.getText();
-				Integer aid = 0;
-				Integer uid = 0;
-				Integer jid = 0;
+				// TODO Auto-generated method stub
+				int ApplicationID;
 				try {
-					uid = Integer.parseInt(uidTxt.getText());
-					jid = Integer.parseInt(jidTxt.getText());
-					aid = Integer.parseInt(idValue.getText());
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "ID must be integer");
-					return; 
+					ApplicationID=Integer.parseInt(applicationIDTxt.getText());
+				}catch (NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Select an application to Edit!");
+					return;
 				}
 				
-				ApplicationHandler.update(aid, uid, jid, name, desc, req, role);
-//				loadData(con.execQuery("SELECT * FROM application"));
-				loadData(aid);
-				
+				ApplicationHandler.delete(ApplicationID);
+				loadData(UserID);
 			}
 		});
 		
 		top.add(sp);
 		
-		left.add(adsp);
-		
-		mid.add(idLbl);
-		mid.add(idValue);
-		mid.add(uidLbl);
-		mid.add(uidTxt);
-		mid.add(jidLbl);
-		mid.add(jidTxt);
-		mid.add(nameLbl);
+//		mid.add(applicationIDLbl);
+//		mid.add(applicationIDTxt);
+//		mid.add(jobIDLbl);
+//		mid.add(jobIDTxt);
+		mid.add(nameLabel);
 		mid.add(nameTxt);
-		mid.add(descLbl);
-		mid.add(descTxt);
-		mid.add(reqLbl);
-		mid.add(reqTxt);
-		mid.add(roleLbl);
-		mid.add(roleTxt);
+		mid.add(CVLabel);
+		mid.add(CVTxt);
+		mid.add(transcriptLbl);
+		mid.add(TranscriptTxt);
 		
-		
-		bot.add(insert);
 		bot.add(update);
 		bot.add(delete);
-		
 
 		add(top,BorderLayout.NORTH);
 		add(mid,BorderLayout.CENTER);
@@ -237,26 +192,24 @@ public class ViewApplication extends JFrame{
 
 	}
 			
-	private void loadData(Integer applicationID) {
+	private void loadData(Integer UserID) {
 		header = new Vector<>();
 		data = new Vector<>();
 		
+		header.add("Application ID");
 		header.add("Job ID");
-		header.add("User ID");
-		header.add("Company ID");
-		header.add("Job Desc");
-		header.add("Job Req");
-		header.add("Job Role");
+		header.add("Name");
+		header.add("CV Desc");
+		header.add("Transcript");
 		header.add("Job Type");
 		
 		if(data==null)data = new Vector<>();
 		else data.clear();
 		
-		for(Application a : ApplicationHandler.GetAll(applicationID)) {
+		for(Application a : ApplicationHandler.GetAll(UserID)) {
 			detail = new Vector<>();
 			
 			detail.add(a.applicationID+"");
-			detail.add(a.userID+"");
 			detail.add(a.jobID+"");
 			detail.add(a.name+"");
 			detail.add(a.cvdescription+"");
@@ -264,7 +217,13 @@ public class ViewApplication extends JFrame{
 			detail.add(a.type+"");
 			
 			data.add(detail);
-			
 		}
-
+		DefaultTableModel dtm = new DefaultTableModel(data, header) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
+		table.setModel(dtm);
 }}

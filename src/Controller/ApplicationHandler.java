@@ -6,6 +6,7 @@ import java.util.Vector;
 import Model.Application;
 import Model.Job;
 import View.EditAdvertisement;
+import View.ViewApplication;
 import View.ViewJobs;
 //import View.EditAdvertisement;
 
@@ -23,12 +24,12 @@ public class ApplicationHandler {
 		return list;
 	}
 	public static boolean insert(int userID, int jobID, String name, String cvdescription, String transcriptdescription, String type) {
-		if(Application.insert(userID,jobID,name,cvdescription,transcriptdescription,type)) 
+		if(Application.insert(userID, jobID, name, cvdescription, transcriptdescription, type)) 
 			return true;
 		return false;
 	}
 	public static boolean update(int applicationID, int userID, int jobID, String name, String cvdescription, String transcriptdescription, String type) {
-		if(Application.update(applicationID, userID,jobID,name,cvdescription,transcriptdescription,type)) 
+		if(Application.update(applicationID, userID, jobID, name, cvdescription, transcriptdescription, type)) 
 			return true;
 		return false;
 	}
@@ -48,11 +49,8 @@ public class ApplicationHandler {
 				return a;
 		}
 		return null;
-
-//		public static Application getAll(int ApplicationID) {
-//			for(Application a : GetAll()) {
-//				if(a.applicationID==ApplicationID) 
-//					return a;
-//			}
-		}
 	}
+	public static void viewApplications(int userID) {
+		new ViewApplication(userID);
+	}
+}

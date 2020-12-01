@@ -4,8 +4,10 @@ import java.util.regex.Pattern;
 
 import Model.User;
 import View.LoginView;
+import View.MainMenu;
 import View.RegistrationView;
 import View.UserMenu;
+import View.ViewJobs;
 
 public class UserHandler {
 	
@@ -47,16 +49,12 @@ public class UserHandler {
 		new UserMenu(userID);
 	}
 	
-	public static void viewJobs(int userID) {
-//		new JobsView(userID);
-	}
-	
-	public static void viewWishList(int userID) {
-//		new WishlistView(userID);
-	}
-	
 	public static User getOne(String email, String password) {
 		return user.getOne(email, password);
+	}
+	
+	public static String getRole(int userID) {
+		return getUser(userID).role;
 	}
 	
 	public static User getUser(int userID) {
@@ -67,5 +65,8 @@ public class UserHandler {
 		}
 		return null;
 	}
-	
+
+	public static void logOut() {
+		new MainMenu();
+	}
 }
