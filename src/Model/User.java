@@ -3,7 +3,7 @@ package Model;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
+import View.MainMenu;
 
 public class User {
 	public int userID;
@@ -107,7 +107,7 @@ public class User {
 		return null;
 		
 	}
-	
+		
 	private static void initUserList() {
 		if(userList == null) userList = new Vector<>();
 		else userList.clear();

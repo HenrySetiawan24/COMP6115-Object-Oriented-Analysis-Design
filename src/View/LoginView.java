@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -21,11 +20,9 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.CompanyHandler;
 import Controller.UserHandler;
-import Model.Company;
-import Model.User;
 
+@SuppressWarnings("serial")
 public class LoginView extends JFrame{
-
 	JPanel top, mid, bot;
 	JLabel titleLbl, emailLbl, passwordLbl, roleLbl;
 	JTextField emailTxt, passwordTxt;
@@ -34,17 +31,19 @@ public class LoginView extends JFrame{
 	
 	Vector<String> roleList;
 	
-	UserHandler userHandler = new UserHandler();
-	CompanyHandler companyHandler = new CompanyHandler();
-	
-	public User temp;
-	public Company comTemp; 
-	
 	public LoginView() {
+		init();
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(new Dimension(900,600));
+		setLocationRelativeTo(null);
+	}
+	
+	public void init() {
 		setTitle("Login Page");
 		
 		top = new JPanel(new FlowLayout());
-		GridLayout gl = new GridLayout(3, 2);
+		GridLayout gl = new GridLayout(12, 2);
 		mid = new JPanel(gl);
 		bot = new JPanel(new FlowLayout());
 		
@@ -68,26 +67,15 @@ public class LoginView extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(userHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
-					temp = userHandler.getOne(emailTxt.getText(), passwordTxt.getText());
+				if(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
 					JOptionPane.showMessageDialog(null, "Login Sukses");
-					System.out.println(temp.userID); // Return ke HomeView
-					System.out.println(temp.name);
-					System.out.println(temp.email);
-					System.out.println(temp.password);
-					System.out.println(temp.address);
-					System.out.println(temp.phoneNumber);
-					System.out.println(temp.role);
+					dispose();
+					UserHandler.viewUserMenu(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()).userID);
 				}
-				else if(companyHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
-					comTemp = companyHandler.getOne(emailTxt.getText(), passwordTxt.getText());
+				else if(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
 					JOptionPane.showMessageDialog(null, "Login Sukses");
-					System.out.println(comTemp.companyID); // Return ke HomeView
-					System.out.println(comTemp.name);
-					System.out.println(comTemp.email);
-					System.out.println(comTemp.password);
-					System.out.println(comTemp.address);
-					System.out.println(comTemp.phoneNumber);
+					dispose();
+					CompanyHandler.viewCompanyMenu(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()).companyID);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Login Gagal");
@@ -109,14 +97,5 @@ public class LoginView extends JFrame{
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);
 		add(bot, BorderLayout.SOUTH);
-		init();
 	}
-	
-	public void init() {
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(new Dimension(900,600));
-		setLocationRelativeTo(null);
-	}
-
 }

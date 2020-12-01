@@ -1,19 +1,10 @@
 package Main;
 
-import View.EditAdvertisement;
-import View.EditInternship;
-import View.EditJob;
-import Controller.UserHandler;
-import View.RegistrationView;
+import View.MainMenu;
 
 public class Main {
-	
-	UserHandler userHandler = new UserHandler();
-	RegistrationView view;
-	
 	public Main() {
-		new EditAdvertisement();
-		view = userHandler.viewRegistration();
+		new MainMenu();
 	}
 	public static void main(String[]Args) {
 		new Main();
