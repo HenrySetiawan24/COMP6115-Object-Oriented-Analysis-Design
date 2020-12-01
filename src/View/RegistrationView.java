@@ -29,7 +29,7 @@ public class RegistrationView extends JFrame{
 	JTextField nameTxt, emailTxt, passwordTxt, phoneNumberTxt;
 	JTextArea addressTxt;
 	JComboBox<String> roleBox;
-	JButton registerBtn;
+	JButton registerBtn, Back;
 	
 	Vector<String> roleList;
 
@@ -64,6 +64,7 @@ public class RegistrationView extends JFrame{
 		roleBox = new JComboBox<>(roleList);
 		
 		registerBtn = new JButton("Register");
+		Back = new JButton("Back");
 		registerBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -80,7 +81,15 @@ public class RegistrationView extends JFrame{
 				
 			}
 		});
-		
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				UserHandler.logOut();
+				dispose();
+			}
+		});
 		top.add(titleLbl);
 		
 		mid.add(nameLbl);
@@ -99,6 +108,7 @@ public class RegistrationView extends JFrame{
 		mid.setBorder(new EmptyBorder(20, 20, 20, 20));
 		
 		bot.add(registerBtn);
+		bot.add(Back);
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);

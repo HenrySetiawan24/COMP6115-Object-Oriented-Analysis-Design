@@ -32,7 +32,7 @@ public class ViewApplication extends JFrame{
 	JLabel applicationIDLbl, jobIDLbl, nameLabel, CVLabel, transcriptLbl, applicationIDTxt, jobIDTxt;
 	JLabel adidLbl,adnameLbl,addescLbl;
 	JTextField nameTxt, CVTxt, TranscriptTxt;
-	JButton update, delete;
+	JButton update, delete, Back;
 	
 	Vector<Vector<String>> data;
 
@@ -57,6 +57,7 @@ public class ViewApplication extends JFrame{
 		
 		sp = new JScrollPane(table);
 		sp.setPreferredSize(new Dimension(850, 300));
+		loadData(UserID);	
 		
 		applicationIDLbl = new JLabel("ID:");
 		jobIDLbl = new JLabel("Desc:");
@@ -72,48 +73,7 @@ public class ViewApplication extends JFrame{
 		
 		update = new JButton("Update");
 		delete = new JButton("Delete");
-		
-		loadData(UserID);	
-		
-		//SELECT row
-		table.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				int row = table.getSelectedRow();
-				
-				applicationIDTxt.setText(table.getValueAt(row, 0).toString()+"");
-				jobIDTxt.setText(table.getValueAt(row, 1).toString()+"");
-				nameTxt.setText(table.getValueAt(row, 2).toString()+"");
-				CVTxt.setText(table.getValueAt(row, 3).toString()+"");
-				TranscriptTxt.setText(table.getValueAt(row, 4).toString()+"");
-			}
-		});
+		Back = new JButton("Back");
 		update.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -168,13 +128,57 @@ public class ViewApplication extends JFrame{
 				loadData(UserID);
 			}
 		});
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
 		
+		//SELECT row
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int row = table.getSelectedRow();
+				
+				applicationIDTxt.setText(table.getValueAt(row, 0).toString()+"");
+				jobIDTxt.setText(table.getValueAt(row, 1).toString()+"");
+				nameTxt.setText(table.getValueAt(row, 2).toString()+"");
+				CVTxt.setText(table.getValueAt(row, 3).toString()+"");
+				TranscriptTxt.setText(table.getValueAt(row, 4).toString()+"");
+			}
+		});
+			
 		top.add(sp);
 		
-//		mid.add(applicationIDLbl);
-//		mid.add(applicationIDTxt);
-//		mid.add(jobIDLbl);
-//		mid.add(jobIDTxt);
 		mid.add(nameLabel);
 		mid.add(nameTxt);
 		mid.add(CVLabel);
@@ -184,7 +188,8 @@ public class ViewApplication extends JFrame{
 		
 		bot.add(update);
 		bot.add(delete);
-
+		bot.add(Back);
+		
 		add(top,BorderLayout.NORTH);
 		add(mid,BorderLayout.CENTER);
 		add(bot,BorderLayout.SOUTH);
@@ -218,6 +223,7 @@ public class ViewApplication extends JFrame{
 			
 			data.add(detail);
 		}
+		
 		DefaultTableModel dtm = new DefaultTableModel(data, header) {
 			@Override
 			public boolean isCellEditable(int row, int column) {

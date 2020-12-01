@@ -35,7 +35,7 @@ public class ViewJobs extends JFrame{
 	JScrollPane sp, adsp;
 	JLabel NameLbl, CVDescLbl , TranscriptDescLbl, jobIDTxt;
 	JTextField nameTxt, CVDescTxt, TranscriptDescTxt;
-	JButton apply;
+	JButton apply, Back;
 	
 	Vector<Vector<String>> data;
 	Vector<Vector<String>> addata;
@@ -75,44 +75,7 @@ public class ViewJobs extends JFrame{
 		TranscriptDescTxt = new JTextField();
 		
 		apply = new JButton("Apply");
-		
-		//SELECT row
-		table.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				int row = table.getSelectedRow();
-				jobIDTxt.setText(table.getValueAt(row, 0).toString()+"");
-				nameTxt.setText(table.getValueAt(row, 1).toString()+""); 
-			}
-		});
-		
-		//APPLY Button
+		Back = new JButton("Back");
 		apply.addActionListener(new ActionListener() {
 			
 			@Override
@@ -152,6 +115,49 @@ public class ViewJobs extends JFrame{
 				loadData();
 			}
 		});
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
+		
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int row = table.getSelectedRow();
+				jobIDTxt.setText(table.getValueAt(row, 0).toString()+"");
+				nameTxt.setText(table.getValueAt(row, 1).toString()+""); 
+			}
+		});
 		
 		//Randomize Advertisement
 		Random random = new Random();
@@ -172,6 +178,7 @@ public class ViewJobs extends JFrame{
 		mid.add(TranscriptDescTxt);
 		
 		bot.add(apply);
+		bot.add(Back);
 		
 		loadData();
 		

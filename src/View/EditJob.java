@@ -29,7 +29,7 @@ public class EditJob extends JFrame{
 	JScrollPane scrollPane;
 	JLabel NameLabel, DescriptionLabel, SalaryLabel, JobIDLabel, CompanyIDLabel, JobIDTxt, CompanyIDTxt;
 	JTextField NameTxt, DescriptionTxt, SalaryTxt;
-	JButton Insert, Update, Delete;
+	JButton Insert, Update, Delete, Back;
 	
 	Vector<String> Header, Detail;
 	Vector<Vector<String>> Data;
@@ -105,6 +105,7 @@ public class EditJob extends JFrame{
 		Insert = new JButton("Insert");
 		Update = new JButton("Update");
 		Delete = new JButton("Delete");
+		Back = new JButton("Back");
 		Insert.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -178,6 +179,12 @@ public class EditJob extends JFrame{
 				loadData(companyID);
 			}
 		});
+		Back.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		top.add(scrollPane);
 		
@@ -195,6 +202,7 @@ public class EditJob extends JFrame{
 		bot.add(Insert);
 		bot.add(Update);
 		bot.add(Delete);
+		bot.add(Back);
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);

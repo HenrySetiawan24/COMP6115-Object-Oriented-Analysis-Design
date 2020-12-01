@@ -29,7 +29,7 @@ public class EditAdvertisement extends JFrame{
 	JScrollPane scrollPane;
 	JLabel TitleLabel, DescriptionLabel, advertisementIDTxt, advertisementIDLabel, CompanyIDTxt, CompanyIDLabel;
 	JTextField TitleTxt, DescriptionTxt;
-	JButton Insert, Update, Delete;
+	JButton Insert, Update, Delete, Back;
 	
 	Vector<String> Header, Detail;
 	Vector<Vector<String>> Data;
@@ -102,6 +102,7 @@ public class EditAdvertisement extends JFrame{
 		Insert = new JButton("Insert");
 		Update = new JButton("Update");
 		Delete = new JButton("Delete");
+		Back = new JButton("Back");
 		Insert.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -161,6 +162,13 @@ public class EditAdvertisement extends JFrame{
 				loadData(companyID);
 			}
 		});
+		Back.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
 		
 		top.add(scrollPane);
 		
@@ -176,6 +184,7 @@ public class EditAdvertisement extends JFrame{
 		bot.add(Insert);
 		bot.add(Update);
 		bot.add(Delete);
+		bot.add(Back);
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);
