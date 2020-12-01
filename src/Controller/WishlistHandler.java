@@ -3,7 +3,7 @@ package Controller;
 import java.util.Vector;
 
 import Model.Wishlist;
-import View.WishlistView;
+import View.ViewWishlist;
 
 public class WishlistHandler {
 
@@ -26,7 +26,7 @@ public class WishlistHandler {
 		
 	}
 	
-	public static void ViewWishlistMenu(int userID) {
-		new WishlistView(userID);
+	public static void ViewWishlist(int userID) {
+		new ViewWishlist(userID);
 	}
 }

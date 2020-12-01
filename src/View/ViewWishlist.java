@@ -16,25 +16,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.ApplicationHandler;
+import Controller.UserHandler;
 import Controller.WishlistHandler;
 import Model.Job;
 import Model.Wishlist;
 
-public class WishlistView extends JFrame{
+public class ViewWishlist extends JFrame{
 
 	JLabel title;
 	JScrollPane scroll;
 	JTable dataTable;
 	JButton applyBtn, deleteBtn;
-	JPanel top, mid, bot;
-	JLabel wishlistID;
+	JPanel top, mid, bot, desc;
+	JLabel wishlistID, nameLbl, CVDescLbl, TranscriptDescLbl, jobIDLbl;
+	JTextField userIDTxt, jobIDTxt, nameTxt, CVDescTxt, TranscriptDescTxt;
 	
 	Vector<String> header, detail;
 	Vector<Vector<String>> Data;
 	Job jobs;
-	public WishlistView(int userID) {
+	public ViewWishlist(int userID) {
 		init(userID);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,9 +49,23 @@ public class WishlistView extends JFrame{
 
 	public void init(int userID) {
 		top = new JPanel();
-		mid = new JPanel(new BorderLayout());
+		mid = new JPanel(new GridLayout(3,1));
 		bot = new JPanel();
+		desc = new JPanel(new GridLayout(4,2));
+		
 		wishlistID = new JLabel("");
+		jobIDLbl = new JLabel("Job Id: ");
+		nameLbl = new JLabel("Job Name:");
+		CVDescLbl = new JLabel("CV Description");
+		TranscriptDescLbl = new JLabel("Transcript Description");
+		
+		jobIDTxt = new JTextField();
+		jobIDTxt.setEditable(false);
+		nameTxt = new JTextField();
+		nameTxt.setEditable(false);
+		CVDescTxt = new JTextField();
+		TranscriptDescTxt = new JTextField();
+		
 		dataTable = new JTable();
 		dataTable.addMouseListener(new MouseListener() {
 			
@@ -79,7 +97,9 @@ public class WishlistView extends JFrame{
 			public void mouseClicked(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				int row = dataTable.getSelectedRow();
-				 wishlistID.setText(dataTable.getValueAt(row, 0).toString()+"");
+				 wishlistID.setText(dataTable.getValueAt(row, 0).toString());
+				 jobIDTxt.setText(dataTable.getValueAt(row, 1).toString());
+				 nameTxt.setText(dataTable.getValueAt(row, 2).toString());
 			}
 		});
 		loadData(userID);
@@ -93,7 +113,44 @@ public class WishlistView extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				int jobID;
+				try {
+					jobID=Integer.parseInt(jobIDTxt.getText());
+				}catch (NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Select Job!!");
+					return;
+				}
 				
+				String Name=nameTxt.getText();
+				if(Name.length()<1) {
+					JOptionPane.showMessageDialog(null, "Select Job!!");
+					return;
+				}
+				
+				String CVDesc=CVDescTxt.getText();
+				if(CVDesc.length()<1) {
+					JOptionPane.showMessageDialog(null, "CV Description Must be Filled!");
+					return;
+				}
+				
+				String TranscriptDesc=TranscriptDescTxt.getText();
+				if(TranscriptDesc.length()<1) {
+					JOptionPane.showMessageDialog(null, "Transcript Description Must be Filled!");
+					return;
+				}
+				
+
+				if(UserHandler.getUser(userID).role.compareTo("Employee")==0) {
+					if(ApplicationHandler.insert(userID, jobID, Name, CVDesc, TranscriptDesc, "Job")) {
+						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+					}else {
+						JOptionPane.showMessageDialog(null, "ApplicationFailed");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "ApplicationFailed");
+				}
+				loadData(userID);
 			}
 		});
 		deleteBtn.addActionListener(new ActionListener() {
@@ -112,12 +169,27 @@ public class WishlistView extends JFrame{
 				loadData(userID);
 			}
 		});
+		
 		scroll = new JScrollPane(dataTable);
 		scroll.setPreferredSize(new Dimension(850, 300));
+		
 		top.add(title);
+		
+		desc.add(jobIDLbl);
+		desc.add(jobIDTxt);
+		desc.add(nameLbl);
+		desc.add(nameTxt);
+		desc.add(CVDescLbl);
+		desc.add(CVDescTxt);
+		desc.add(TranscriptDescLbl);
+		desc.add(TranscriptDescTxt);
+
 		mid.add(scroll);
+		mid.add(desc);
 		bot.add(applyBtn);
 		bot.add(deleteBtn);
+		
+		
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);
@@ -130,7 +202,6 @@ public class WishlistView extends JFrame{
 			header = new Vector<>();
 			header.add("WishlistID");
 			header.add("JobID");
-			header.add("CompanyID");
 			header.add("Name");
 			header.add("Description");
 			header.add("Salary");
@@ -140,16 +211,16 @@ public class WishlistView extends JFrame{
 		else Data.clear();
 		
 		for (Wishlist w : WishlistHandler.getAll(userID)) {
-			Job jobs = w.find(w.jobID);
+			jobs = w.find(w.jobID);
 			detail = new Vector<>();
 			detail.add(w.wishlistID+"");
 			detail.add(w.jobID+"");
-			detail.add(jobs.companyID+"");
 			detail.add(jobs.name+"");
 			detail.add(jobs.description+"");
 			detail.add(jobs.salary+"");	
 			Data.add(detail);
 		}
+		
 		DefaultTableModel dtm = new DefaultTableModel(Data, header){
 			@Override
 			public boolean isCellEditable(int row, int column) {

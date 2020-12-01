@@ -7,11 +7,8 @@ import View.LoginView;
 import View.MainMenu;
 import View.RegistrationView;
 import View.UserMenu;
-<<<<<<< HEAD
-import View.WishlistView;
-=======
+import View.ViewWishlist;
 import View.ViewJobs;
->>>>>>> 765d26febb1a6a597815e25ff46ffc49f2e340c3
 
 public class UserHandler {
 	
@@ -53,17 +50,14 @@ public class UserHandler {
 		new UserMenu(userID);
 	}
 	
-<<<<<<< HEAD
 	public static void viewJobs(int userID) {
 //		new JobsView(userID);
 	}
 	
 	public static void viewWishList(int userID) {
-		new WishlistView(userID);
+		new ViewWishlist(userID);
 	}
 	
-=======
->>>>>>> 765d26febb1a6a597815e25ff46ffc49f2e340c3
 	public static User getOne(String email, String password) {
 		return user.getOne(email, password);
 	}

@@ -17,6 +17,7 @@ import Controller.ApplicationHandler;
 import Controller.ApprovementHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
+import Controller.WishlistHandler;
 
 @SuppressWarnings("serial")
 public class UserMenu extends JFrame{
@@ -40,13 +41,10 @@ public class UserMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-<<<<<<< HEAD
 				dispose();
 				JOptionPane.showMessageDialog(null, "NotYetImplemented");
 //				UserHandler.viewJobs(userID);
-=======
 				JobHandler.viewJobs(userID);
->>>>>>> 765d26febb1a6a597815e25ff46ffc49f2e340c3
 			}
 		});
 		WishListBtn.addActionListener(new ActionListener() {
@@ -54,7 +52,7 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				JOptionPane.showMessageDialog(null, "NotYetImplemented");//remove when done
-//				WishListHandler.viewWishList(userID);
+				WishlistHandler.ViewWishlist(userID);
 			}
 		});
 		ApplicationsBtn.addActionListener(new ActionListener() {
@@ -76,11 +74,8 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-<<<<<<< HEAD
 				UserHandler.viewWishList(userID);
-=======
 				UserHandler.logOut();
->>>>>>> 765d26febb1a6a597815e25ff46ffc49f2e340c3
 			}
 		});
 		if(UserHandler.getUser(userID).role.compareTo("Staff")==0) {
