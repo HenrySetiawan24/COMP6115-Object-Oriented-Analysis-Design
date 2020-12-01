@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.AdvertisementHandler;
+import Controller.ApplicationHandler;
 import Controller.CompanyHandler;
 import Controller.InternshipHandler;
 import Controller.JobHandler;
@@ -21,18 +22,19 @@ import Controller.UserHandler;
 @SuppressWarnings("serial")
 public class CompanyMenu extends JFrame{
 	JLabel Title;
-	JButton JobsBtn, InternshipBtn, AdvertisementBtm, LogoutBtn;
+	JButton JobsBtn, InternshipBtn, AdvertisementBtm, LogoutBtn, Applications;
 	JPanel mainFrame, contentFrame;
 	public CompanyMenu(int companyID) {
 		init();
 		mainFrame = new JPanel(new BorderLayout());
-		contentFrame = new JPanel(new GridLayout(4, 1, 1, 50));
+		contentFrame = new JPanel(new GridLayout(5, 1, 1, 10));
 		
 		Title = new JLabel("Hello "+CompanyHandler.getCompany(companyID).name+" Representative! What business will you attend to today?");
 
 		JobsBtn = new JButton("Manage Jobs");
 		InternshipBtn = new JButton("Manage Internships");
 		AdvertisementBtm = new JButton("Manage Ads");
+		Applications = new JButton("Applications");
 		LogoutBtn = new JButton("Logout");
 		JobsBtn.addActionListener(new ActionListener() {
 			@Override
@@ -55,6 +57,14 @@ public class CompanyMenu extends JFrame{
 				JobHandler.ViewJobMenu(companyID);
 			}
 		});
+		Applications.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ApplicationHandler.viewApplications(companyID);
+			}
+		});
 		LogoutBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -67,6 +77,7 @@ public class CompanyMenu extends JFrame{
 		contentFrame.add(JobsBtn);
 		contentFrame.add(InternshipBtn);
 		contentFrame.add(AdvertisementBtm);
+		contentFrame.add(Applications);
 		contentFrame.add(LogoutBtn);
 		contentFrame.setBorder(new EmptyBorder(200, 300, 200, 300));
 		

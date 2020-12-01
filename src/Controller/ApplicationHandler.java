@@ -23,7 +23,32 @@ public class ApplicationHandler {
 		}
 		return list;
 	}
+	
+	public static Vector<Application> GetAllCompany(int CompanyID){
+		Vector<Application> list=new Vector<Application>();
+		for(Application a:Application.getAll()) {
+			int cID=JobHandler.getJob(a.jobID).companyID;
+			if(cID==0)cID=InternshipHandler.getJob(a.jobID).companyID;
+			if(cID==CompanyID)
+				list.add(a);
+		}
+		return list;
+	}
+	
+	public static Application GetApplication(int ApplicationID){
+		for(Application a:Application.getAll()) {
+			if(a.applicationID==ApplicationID)
+				return a;
+		}
+		return null;
+	}
+	
 	public static boolean insert(int userID, int jobID, String name, String cvdescription, String transcriptdescription, String type) {
+		for(Application a: GetAll(userID)) {
+			if(JobHandler.getJob(jobID)==JobHandler.getJob(a.jobID)){
+				return false;
+			}
+		}
 		if(Application.insert(userID, jobID, name, cvdescription, transcriptdescription, type)) 
 			return true;
 		return false;

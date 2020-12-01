@@ -22,9 +22,11 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
+import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
 import Model.Advertisement;
+import Model.Internship;
 import Model.Job;
 
 public class ViewJobs extends JFrame{
@@ -35,7 +37,7 @@ public class ViewJobs extends JFrame{
 	JScrollPane sp, adsp;
 	JLabel NameLbl, CVDescLbl , TranscriptDescLbl, jobIDTxt;
 	JTextField nameTxt, CVDescTxt, TranscriptDescTxt;
-	JButton apply;
+	JButton apply, Back;
 	
 	Vector<Vector<String>> data;
 	Vector<Vector<String>> addata;
@@ -75,8 +77,64 @@ public class ViewJobs extends JFrame{
 		TranscriptDescTxt = new JTextField();
 		
 		apply = new JButton("Apply");
+		Back = new JButton("Back");
+		apply.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int JobID;
+				try {
+					JobID=Integer.parseInt(jobIDTxt.getText());
+				}catch (NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Select an application to Edit!");
+					return;
+				}
+				
+				String Name=nameTxt.getText();
+				if(Name.length()<1) {
+					JOptionPane.showMessageDialog(null, "Name Must be Filled!");
+					return;
+				}
+				
+				String CVDesc=CVDescTxt.getText();
+				if(CVDesc.length()<1) {
+					JOptionPane.showMessageDialog(null, "CV Description Must be Filled!");
+					return;
+				}
+				
+				String TranscriptDesc=TranscriptDescTxt.getText();
+				if(TranscriptDesc.length()<1) {
+					JOptionPane.showMessageDialog(null, "Transcript Description Must be Filled!");
+					return;
+				}
+				if(UserHandler.getUser(UserID).role.compareTo("Student")==0) {
+					if(ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Intern")) {
+						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+					}else {
+						JOptionPane.showMessageDialog(null, "ApplicationFailed");
+					}
+				}
+				else if(UserHandler.getUser(UserID).role.compareTo("Employee")==0) {
+					if(ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Job")) {
+						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+					}else {
+						JOptionPane.showMessageDialog(null, "ApplicationFailed");
+					}
+				}
+				
+				loadData(UserID);
+			}
+		});
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+			}
+		});
 		
-		//SELECT row
 		table.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -112,47 +170,6 @@ public class ViewJobs extends JFrame{
 			}
 		});
 		
-		//APPLY Button
-		apply.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				int JobID;
-				try {
-					JobID=Integer.parseInt(jobIDTxt.getText());
-				}catch (NumberFormatException e1){
-					JOptionPane.showMessageDialog(null, "Select an application to Edit!");
-					return;
-				}
-				
-				String Name=nameTxt.getText();
-				if(Name.length()<1) {
-					JOptionPane.showMessageDialog(null, "Name Must be Filled!");
-					return;
-				}
-				
-				String CVDesc=CVDescTxt.getText();
-				if(CVDesc.length()<1) {
-					JOptionPane.showMessageDialog(null, "CV Description Must be Filled!");
-					return;
-				}
-				
-				String TranscriptDesc=TranscriptDescTxt.getText();
-				if(TranscriptDesc.length()<1) {
-					JOptionPane.showMessageDialog(null, "Transcript Description Must be Filled!");
-					return;
-				}
-				System.out.println(UserHandler.getRole(UserID));
-				if(UserHandler.getUser(UserID).role.compareTo("Student")==0) {
-					ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Intern");}
-				else if(UserHandler.getUser(UserID).role.compareTo("Employee")==0) {
-					ApplicationHandler.insert(UserID, JobID, Name, CVDesc, TranscriptDesc, "Job");}
-				
-				loadData();
-			}
-		});
-		
 		//Randomize Advertisement
 		Random random = new Random();
 		int adID = random.nextInt(AdvertisementHandler.GetAll().size());
@@ -172,8 +189,9 @@ public class ViewJobs extends JFrame{
 		mid.add(TranscriptDescTxt);
 		
 		bot.add(apply);
+		bot.add(Back);
 		
-		loadData();
+		loadData(UserID);
 		
 		add(top,BorderLayout.NORTH);
 		add(mid,BorderLayout.CENTER);
@@ -205,30 +223,40 @@ public class ViewJobs extends JFrame{
 		adtable.setModel(addtm);
 	}
 	
-	private void loadData() {
+	private void loadData(int UserID) {
 		header = new Vector<>();
 		data = new Vector<>();
 		
 		header.add("Job ID");
 		header.add("Job Name");
 		header.add("Job Desc");
-		header.add("Job Salary");
+		if(UserHandler.getRole(UserID).compareTo("Student")!=0)
+			header.add("Job Salary");
 		
 		if(data==null)data = new Vector<>();
 		else data.clear();
-		
-		for(Job j : JobHandler.GetAll()) {
-			detail = new Vector<>();
-			
-			detail.add(j.jobID+"");
-			detail.add(j.name+"");
-			detail.add(j.description+"");
-			detail.add(j.salary+"");
-			
-			data.add(detail);
-			
-		}
-		
+		if(UserHandler.getRole(UserID).compareTo("Student")!=0)
+			for(Job j : JobHandler.GetAll()) {
+				detail = new Vector<>();
+				
+				detail.add(j.jobID+"");
+				detail.add(j.name+"");
+				detail.add(j.description+"");
+				detail.add(j.salary+"");
+				
+				data.add(detail);
+				
+			}
+		else
+			for(Internship j : InternshipHandler.GetAll()) {
+				detail = new Vector<>();
+				
+				detail.add(j.jobID+"");
+				detail.add(j.name+"");
+				detail.add(j.description+"");
+				
+				data.add(detail);
+			}
 		DefaultTableModel dtm = new DefaultTableModel(data, header) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
