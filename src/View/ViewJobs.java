@@ -25,6 +25,7 @@ import Controller.ApplicationHandler;
 import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
+import Controller.WishlistHandler;
 import Model.Advertisement;
 import Model.Internship;
 import Model.Job;
@@ -37,7 +38,7 @@ public class ViewJobs extends JFrame{
 	JScrollPane sp, adsp;
 	JLabel NameLbl, CVDescLbl , TranscriptDescLbl, jobIDTxt;
 	JTextField nameTxt, CVDescTxt, TranscriptDescTxt;
-	JButton apply, Back;
+	JButton apply, wishlist, Back;
 	
 	Vector<Vector<String>> data;
 	Vector<Vector<String>> addata;
@@ -78,6 +79,7 @@ public class ViewJobs extends JFrame{
 		
 		apply = new JButton("Apply");
 		Back = new JButton("Back");
+		wishlist = new JButton("Add to Wishlist");
 		apply.addActionListener(new ActionListener() {
 			
 			@Override
@@ -124,6 +126,25 @@ public class ViewJobs extends JFrame{
 				}
 				
 				loadData(UserID);
+			}
+		});
+		wishlist.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int jobID;
+				try {
+					jobID=Integer.parseInt(jobIDTxt.getText());
+				}catch (NumberFormatException e1){
+					JOptionPane.showMessageDialog(null, "Select an application to add!");
+					return;
+				}
+				if(WishlistHandler.insert(UserID, jobID)) {
+					JOptionPane.showMessageDialog(null, "Added Successfully!");
+				}else {
+					JOptionPane.showMessageDialog(null, "Add Failed");
+				}
 			}
 		});
 		Back.addActionListener(new ActionListener() {
@@ -190,6 +211,7 @@ public class ViewJobs extends JFrame{
 		
 		bot.add(apply);
 		bot.add(Back);
+		bot.add(wishlist);
 		
 		loadData(UserID);
 		

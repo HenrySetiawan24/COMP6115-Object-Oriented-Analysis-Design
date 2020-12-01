@@ -20,13 +20,13 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ApplicationHandler;
+import Controller.JobHandler;
 import Controller.UserHandler;
 import Controller.WishlistHandler;
 import Model.Job;
 import Model.Wishlist;
 
 public class ViewWishlist extends JFrame{
-
 	JLabel title;
 	JScrollPane scroll;
 	JTable dataTable;
@@ -113,9 +113,10 @@ public class ViewWishlist extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				int jobID;
+				int jobID, wishID;
 				try {
 					jobID=Integer.parseInt(jobIDTxt.getText());
+					wishID = Integer.parseInt(wishlistID.getText());
 				}catch (NumberFormatException e1){
 					JOptionPane.showMessageDialog(null, "Select Job!!");
 					return;
@@ -143,12 +144,21 @@ public class ViewWishlist extends JFrame{
 				if(UserHandler.getUser(userID).role.compareTo("Employee")==0) {
 					if(ApplicationHandler.insert(userID, jobID, Name, CVDesc, TranscriptDesc, "Job")) {
 						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+						WishlistHandler.delete(wishID);
 					}else {
 						JOptionPane.showMessageDialog(null, "ApplicationFailed");
 					}
 				}
-				else {
-					JOptionPane.showMessageDialog(null, "ApplicationFailed");
+				else if(UserHandler.getUser(userID).role.compareTo("Student")==0) {
+					if(ApplicationHandler.insert(userID, jobID, Name, CVDesc, TranscriptDesc, "Intern")) {
+						JOptionPane.showMessageDialog(null, "Applied Successfully!");
+						WishlistHandler.delete(wishID);
+					}else {
+						JOptionPane.showMessageDialog(null, "ApplicationFailed");
+					}
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Please Login First");
 				}
 				loadData(userID);
 			}
@@ -186,10 +196,9 @@ public class ViewWishlist extends JFrame{
 
 		mid.add(scroll);
 		mid.add(desc);
+		
 		bot.add(applyBtn);
 		bot.add(deleteBtn);
-		
-		
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);
@@ -204,20 +213,23 @@ public class ViewWishlist extends JFrame{
 			header.add("JobID");
 			header.add("Name");
 			header.add("Description");
-			header.add("Salary");
+			if(UserHandler.getUser(userID).role.compareTo("Employee")==0)
+				header.add("Salary");
 		}
 		if(Data == null)
 			Data = new Vector<>();
 		else Data.clear();
 		
 		for (Wishlist w : WishlistHandler.getAll(userID)) {
-			jobs = w.find(w.jobID);
+			jobs = JobHandler.getJob(w.jobID);
 			detail = new Vector<>();
 			detail.add(w.wishlistID+"");
 			detail.add(w.jobID+"");
 			detail.add(jobs.name+"");
 			detail.add(jobs.description+"");
-			detail.add(jobs.salary+"");	
+			if(UserHandler.getUser(userID).role.compareTo("Employee")==0)
+				detail.add(jobs.salary+"");	
+			
 			Data.add(detail);
 		}
 		

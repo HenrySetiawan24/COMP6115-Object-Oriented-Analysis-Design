@@ -21,9 +21,8 @@ public class WishlistHandler {
 		return false;
 	}
 	
-	public static void delete(int wishlistID) {
-		Wishlist.delete(wishlistID);
-		
+	public static boolean delete(int wishlistID) {
+		return Wishlist.delete(wishlistID);
 	}
 	
 	public static void ViewWishlist(int userID) {
