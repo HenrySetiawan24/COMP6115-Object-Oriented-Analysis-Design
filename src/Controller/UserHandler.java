@@ -7,6 +7,7 @@ import View.LoginView;
 import View.MainMenu;
 import View.RegistrationView;
 import View.UserMenu;
+import View.ViewWishlist;
 import View.ViewJobs;
 
 public class UserHandler {
@@ -47,6 +48,14 @@ public class UserHandler {
 	
 	public static void viewUserMenu(int userID) {
 		new UserMenu(userID);
+	}
+	
+	public static void viewJobs(int userID) {
+//		new JobsView(userID);
+	}
+	
+	public static void viewWishList(int userID) {
+		new ViewWishlist(userID);
 	}
 	
 	public static User getOne(String email, String password) {

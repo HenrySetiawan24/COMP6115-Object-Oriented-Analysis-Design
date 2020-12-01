@@ -17,6 +17,7 @@ import Controller.ApplicationHandler;
 import Controller.ApprovementHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
+import Controller.WishlistHandler;
 
 @SuppressWarnings("serial")
 public class UserMenu extends JFrame{
@@ -40,6 +41,9 @@ public class UserMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
+				JOptionPane.showMessageDialog(null, "NotYetImplemented");
+//				UserHandler.viewJobs(userID);
 				JobHandler.viewJobs(userID);
 			}
 		});
@@ -48,7 +52,7 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				JOptionPane.showMessageDialog(null, "NotYetImplemented");//remove when done
-//				WishListHandler.viewWishList(userID);
+				WishlistHandler.ViewWishlist(userID);
 			}
 		});
 		ApplicationsBtn.addActionListener(new ActionListener() {
@@ -70,6 +74,7 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
+				UserHandler.viewWishList(userID);
 				UserHandler.logOut();
 			}
 		});
