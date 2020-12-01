@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import Model.Job;
 import View.EditJob;
+import View.ViewJobs;
 
 public class JobHandler {
 	public static Vector<Job> GetAll(){
@@ -56,6 +57,10 @@ public class JobHandler {
 				return j.jobID;
 		}
 		return 0;
+	}
+
+	public static void viewJobs(int userID) {
+		new ViewJobs(userID);
 	}
 	
 	public static Job getJob(int JobID) {

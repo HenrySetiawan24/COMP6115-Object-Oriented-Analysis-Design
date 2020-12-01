@@ -16,22 +16,24 @@ import Controller.AdvertisementHandler;
 import Controller.CompanyHandler;
 import Controller.InternshipHandler;
 import Controller.JobHandler;
+import Controller.UserHandler;
 
 @SuppressWarnings("serial")
 public class CompanyMenu extends JFrame{
 	JLabel Title;
-	JButton JobsBtn, InternshipBtn, AdvertisementBtm;
+	JButton JobsBtn, InternshipBtn, AdvertisementBtm, LogoutBtn;
 	JPanel mainFrame, contentFrame;
 	public CompanyMenu(int companyID) {
 		init();
 		mainFrame = new JPanel(new BorderLayout());
-		contentFrame = new JPanel(new GridLayout(3, 1, 1, 50));
+		contentFrame = new JPanel(new GridLayout(4, 1, 1, 50));
 		
 		Title = new JLabel("Hello "+CompanyHandler.getCompany(companyID).name+" Representative! What business will you attend to today?");
 
 		JobsBtn = new JButton("Manage Jobs");
 		InternshipBtn = new JButton("Manage Internships");
 		AdvertisementBtm = new JButton("Manage Ads");
+		LogoutBtn = new JButton("Logout");
 		JobsBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -53,9 +55,19 @@ public class CompanyMenu extends JFrame{
 				JobHandler.ViewJobMenu(companyID);
 			}
 		});
+		LogoutBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+				UserHandler.logOut();
+			}
+		});
+		
 		contentFrame.add(JobsBtn);
 		contentFrame.add(InternshipBtn);
 		contentFrame.add(AdvertisementBtm);
+		contentFrame.add(LogoutBtn);
 		contentFrame.setBorder(new EmptyBorder(200, 300, 200, 300));
 		
 		mainFrame.add(Title, BorderLayout.NORTH);

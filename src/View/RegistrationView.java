@@ -37,7 +37,7 @@ public class RegistrationView extends JFrame{
 		setTitle("Register Page");
 		
 		top = new JPanel(new FlowLayout());
-		GridLayout gl = new GridLayout(6, 2);
+		GridLayout gl = new GridLayout(12, 2);
 		mid = new JPanel(gl);
 		bot = new JPanel(new FlowLayout());
 		

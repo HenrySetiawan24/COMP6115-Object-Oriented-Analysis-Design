@@ -43,7 +43,7 @@ public class LoginView extends JFrame{
 		setTitle("Login Page");
 		
 		top = new JPanel(new FlowLayout());
-		GridLayout gl = new GridLayout(3, 2);
+		GridLayout gl = new GridLayout(12, 2);
 		mid = new JPanel(gl);
 		bot = new JPanel(new FlowLayout());
 		
