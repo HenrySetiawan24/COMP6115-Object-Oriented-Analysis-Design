@@ -92,8 +92,6 @@ public class User {
 				this.email = con.rs.getString("email");
 				this.phoneNumber = con.rs.getString("phoneNum");
 				this.role = con.rs.getString("role");
-//				return new User(con.rs.getInt("userID"), con.rs.getString("name"), con.rs.getString("password"), 
-//						con.rs.getString("address"), con.rs.getString("email"), con.rs.getString("phoneNum"), con.rs.getString("role"));
 				return this;
 			}
 			else {
@@ -106,7 +104,30 @@ public class User {
 		return null;
 		
 	}
+	
+	public static boolean checkEmail(String email) {
+		con.ps = con.prepareStatement("SELECT * FROM user WHERE email=?");
+		try {
+			con.ps.setString(1, email);
+			con.rs = con.ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		try {
+			if(con.rs.first()) {
+				if(email == con.rs.getString("email")) {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 	private static void initUserList() {
 		if(userList == null) userList = new Vector<>();
 		else userList.clear();

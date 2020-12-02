@@ -101,6 +101,29 @@ public class Company {
 		
 	}
 	
+	public static boolean checkEmail(String email) {
+		con.ps = con.prepareStatement("SELECT * FROM company WHERE email=?");
+		try {
+			con.ps.setString(1, email);
+			con.rs = con.ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			if(con.rs.first()) {
+				if(email == con.rs.getString("email")) {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 	private static void initCompanyList() {
 		if(companyList == null) companyList = new Vector<>();
 		else companyList.clear();

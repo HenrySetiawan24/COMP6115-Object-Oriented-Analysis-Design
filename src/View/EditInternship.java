@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.CompanyHandler;
 import Controller.InternshipHandler;
 import Model.Internship;
 
@@ -167,6 +168,7 @@ public class EditInternship extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
+				CompanyHandler.viewCompanyMenu(companyID);
 			}
 		});
 		

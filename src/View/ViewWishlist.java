@@ -20,9 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ApplicationHandler;
+import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
 import Controller.WishlistHandler;
+import Model.Internship;
 import Model.Job;
 import Model.Wishlist;
 
@@ -30,14 +32,15 @@ public class ViewWishlist extends JFrame{
 	JLabel title;
 	JScrollPane scroll;
 	JTable dataTable;
-	JButton applyBtn, deleteBtn;
+	JButton applyBtn, deleteBtn, Back;
 	JPanel top, mid, bot, desc;
 	JLabel wishlistID, nameLbl, CVDescLbl, TranscriptDescLbl, jobIDLbl;
 	JTextField userIDTxt, jobIDTxt, nameTxt, CVDescTxt, TranscriptDescTxt;
 	
 	Vector<String> header, detail;
 	Vector<Vector<String>> Data;
-	Job jobs;
+	Internship intern;
+	Job job;
 	public ViewWishlist(int userID) {
 		init(userID);
 		setVisible(true);
@@ -107,7 +110,7 @@ public class ViewWishlist extends JFrame{
 		
 		applyBtn = new JButton("Apply");
 		deleteBtn = new JButton("Delete");
-		
+		Back = new JButton("Back");
 		applyBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -179,7 +182,15 @@ public class ViewWishlist extends JFrame{
 				loadData(userID);
 			}
 		});
-		
+		Back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+				UserHandler.viewUserMenu(userID);
+			}
+		});
 		scroll = new JScrollPane(dataTable);
 		scroll.setPreferredSize(new Dimension(850, 300));
 		
@@ -199,6 +210,7 @@ public class ViewWishlist extends JFrame{
 		
 		bot.add(applyBtn);
 		bot.add(deleteBtn);
+		bot.add(Back);
 		
 		add(top, BorderLayout.NORTH);
 		add(mid, BorderLayout.CENTER);
@@ -221,15 +233,21 @@ public class ViewWishlist extends JFrame{
 		else Data.clear();
 		
 		for (Wishlist w : WishlistHandler.getAll(userID)) {
-			jobs = JobHandler.getJob(w.jobID);
 			detail = new Vector<>();
-			detail.add(w.wishlistID+"");
-			detail.add(w.jobID+"");
-			detail.add(jobs.name+"");
-			detail.add(jobs.description+"");
-			if(UserHandler.getUser(userID).role.compareTo("Employee")==0)
-				detail.add(jobs.salary+"");	
-			
+			if(UserHandler.getUser(userID).role.compareTo("Employee")==0) {
+				job = JobHandler.getJob(w.jobID);
+				detail.add(w.wishlistID+"");
+				detail.add(w.jobID+"");
+				detail.add(job.name+"");
+				detail.add(job.description+"");
+				detail.add(job.salary+"");	
+			}else if(UserHandler.getUser(userID).role.compareTo("Student")==0) {
+				intern = InternshipHandler.getJob(w.jobID);
+				detail.add(w.wishlistID+"");
+				detail.add(w.jobID+"");
+				detail.add(intern.name+"");
+				detail.add(intern.description+"");
+			}
 			Data.add(detail);
 		}
 		

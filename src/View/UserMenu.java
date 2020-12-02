@@ -42,8 +42,7 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				JOptionPane.showMessageDialog(null, "NotYetImplemented");
-//				UserHandler.viewJobs(userID);
+				dispose();
 				JobHandler.viewJobs(userID);
 			}
 		});
@@ -51,7 +50,7 @@ public class UserMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JOptionPane.showMessageDialog(null, "NotYetImplemented");//remove when done
+				dispose();
 				WishlistHandler.ViewWishlist(userID);
 			}
 		});
@@ -59,6 +58,7 @@ public class UserMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
 				ApplicationHandler.viewApplications(userID);
 			}
 		});
@@ -66,6 +66,7 @@ public class UserMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
 				ApprovementHandler.viewApprovements(userID);
 			}
 		});

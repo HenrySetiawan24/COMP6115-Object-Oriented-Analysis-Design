@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.CompanyHandler;
 import Controller.JobHandler;
 import Model.Job;
 
@@ -183,6 +184,7 @@ public class EditJob extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				CompanyHandler.viewCompanyMenu(companyID);
 			}
 		});
 		

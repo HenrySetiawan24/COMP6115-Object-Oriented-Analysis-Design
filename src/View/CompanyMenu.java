@@ -40,6 +40,7 @@ public class CompanyMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
 				AdvertisementHandler.viewAdvertisementMenu(companyID);
 			}
 		});
@@ -47,6 +48,7 @@ public class CompanyMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
 				InternshipHandler.ViewInternshipMenu(companyID);
 			}
 		});
@@ -54,6 +56,7 @@ public class CompanyMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				dispose();
 				JobHandler.ViewJobMenu(companyID);
 			}
 		});
@@ -62,7 +65,8 @@ public class CompanyMenu extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ApplicationHandler.viewApplications(companyID);
+				dispose();
+				ApplicationHandler.editApplications(companyID);
 			}
 		});
 		LogoutBtn.addActionListener(new ActionListener() {

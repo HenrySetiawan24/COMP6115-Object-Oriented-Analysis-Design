@@ -23,7 +23,7 @@ public class UserHandler {
 	}
 
 	public static boolean createAccount(String name, String email, String password, String address, String phoneNumber, String role) {
-		if(name == null || checkEmail(email) == false ||  password == null ||  address == null ||  phoneNumber == null ||  role == null) {
+		if(User.checkEmail(email) || name == null || checkEmail(email) == false ||  password == null ||  address == null ||  phoneNumber == null ||  role == null) {
 			return false;
 		}
 		return user.insert(name, email, password, address, phoneNumber, role);

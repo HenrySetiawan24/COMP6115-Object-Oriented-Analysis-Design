@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.ApplicationHandler;
 import Controller.ApprovementHandler;
+import Controller.CompanyHandler;
 import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
@@ -54,6 +55,7 @@ public class ViewApprovement extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				UserHandler.viewUserMenu(UserID);
 			}
 		});
 		

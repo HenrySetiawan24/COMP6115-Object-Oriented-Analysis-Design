@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
+import Controller.CompanyHandler;
 import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
@@ -153,6 +154,7 @@ public class ViewJobs extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
+				UserHandler.viewUserMenu(UserID);
 			}
 		});
 		

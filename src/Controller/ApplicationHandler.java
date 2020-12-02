@@ -6,6 +6,7 @@ import java.util.Vector;
 import Model.Application;
 import Model.Job;
 import View.EditAdvertisement;
+import View.EditApplications;
 import View.ViewApplication;
 import View.ViewJobs;
 //import View.EditAdvertisement;
@@ -26,9 +27,12 @@ public class ApplicationHandler {
 	
 	public static Vector<Application> GetAllCompany(int CompanyID){
 		Vector<Application> list=new Vector<Application>();
-		for(Application a:Application.getAll()) {
-			int cID=JobHandler.getJob(a.jobID).companyID;
-			if(cID==0)cID=InternshipHandler.getJob(a.jobID).companyID;
+		for(Application a : Application.getAll()) {
+			int cID=0;
+			if(JobHandler.getJob(a.jobID)!=null)
+				cID=JobHandler.getJob(a.jobID).companyID;
+			else if(InternshipHandler.getJob(a.jobID)!=null)
+				cID=InternshipHandler.getJob(a.jobID).companyID;
 			if(cID==CompanyID)
 				list.add(a);
 		}
@@ -77,5 +81,8 @@ public class ApplicationHandler {
 	}
 	public static void viewApplications(int userID) {
 		new ViewApplication(userID);
+	}
+	public static void editApplications(int companyID) {
+		new EditApplications(companyID);
 	}
 }

@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
+import Controller.CompanyHandler;
 import Model.Advertisement;
 
 @SuppressWarnings("serial")
@@ -167,6 +168,7 @@ public class EditAdvertisement extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
+				CompanyHandler.viewCompanyMenu(companyID);
 			}
 		});
 		

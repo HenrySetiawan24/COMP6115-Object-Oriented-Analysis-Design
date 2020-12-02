@@ -31,7 +31,10 @@ public class CompanyHandler {
 		}
 		Pattern pattern = Pattern.compile(emailFormat);
 		
-		return pattern.matcher(email).matches();
+		if(Company.checkEmail(email)) {
+			return pattern.matcher(email).matches();
+		}
+		return false;
 	}
 
 	public static Company getOne(String email, String password) {

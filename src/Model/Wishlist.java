@@ -19,7 +19,7 @@ public class Wishlist {
 	}
 	
 	public static Vector<Wishlist> getAll(int userID){
-		con.rs = con.execQuery("SELECT * FROM WISHLIST WHERE userID = '" + userID + "'");
+		con.rs = con.execQuery("SELECT * FROM WISHLIST WHERE UserID = '" + userID + "'");
 		Vector<Wishlist> wishlist = new Vector<>();
 		try {
 			while(con.rs.next()) {
