@@ -50,6 +50,13 @@ public class Approvement {
 	}
 	
 	public static boolean insert(int applicationID) {
+		ResultSet data = connection.execQuery("SELECT * FROM `approvement` WHERE applicationID = '"+applicationID+"'");
+		try {
+			while(data.next())
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return connection.execUpdate("INSERT INTO `approvement` "
 									+ "(`approvementID`,`applicationID`) VALUES "
 									+ "(NULL, '"+applicationID+"');");
