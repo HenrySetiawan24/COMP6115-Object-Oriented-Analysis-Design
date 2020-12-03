@@ -20,7 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.CompanyHandler;
+import Controller.InternshipHandler;
 import Controller.JobHandler;
+import Model.Internship;
 import Model.Job;
 
 @SuppressWarnings("serial")
@@ -37,7 +39,7 @@ public class EditJob extends JFrame{
 	
 	public EditJob(int companyID) {
 		init(companyID);
-		setTitle("");
+		setTitle("Manage Jobs");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);
@@ -231,6 +233,17 @@ public class EditJob extends JFrame{
 			Detail.add(j.name+"");
 			Detail.add(j.description+"");
 			Detail.add(j.salary+"");
+			
+			Data.add(Detail);
+		}
+		for(Internship i : InternshipHandler.GetAll(companyID)) {
+			Detail=new Vector<>();
+			
+			Detail.add(i.jobID+"");
+			Detail.add(i.companyID+"");
+			Detail.add(i.name+"");
+			Detail.add(i.description+"");
+			Detail.add("0");
 			
 			Data.add(Detail);
 		}

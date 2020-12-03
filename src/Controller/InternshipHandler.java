@@ -11,12 +11,7 @@ public class InternshipHandler {
 	}
 	
 	public static Vector<Internship> GetAll(int companyID){
-		Vector<Internship> f = Internship.getAll();
-		for(Internship j : f) {
-			if(j.companyID!=companyID) 
-				f.remove(j);
-		}
-		return f;
+		return Internship.getAll(companyID);
 	}
 	
 	public static boolean delete(int jobID, int companyID) {
@@ -59,10 +54,6 @@ public class InternshipHandler {
 	}
 	
 	public static Internship getJob(int JobID) {
-		for(Internship j : GetAll()) {
-			if(j.jobID==JobID) 
-				return j;
-		}
-		return null;
+		return Internship.find(JobID);
 	}
 }

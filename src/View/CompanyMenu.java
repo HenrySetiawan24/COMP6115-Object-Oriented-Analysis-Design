@@ -41,7 +41,7 @@ public class CompanyMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				AdvertisementHandler.viewAdvertisementMenu(companyID);
+				JobHandler.ViewJobMenu(companyID);
 			}
 		});
 		InternshipBtn.addActionListener(new ActionListener() {
@@ -57,7 +57,7 @@ public class CompanyMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				JobHandler.ViewJobMenu(companyID);
+				AdvertisementHandler.viewAdvertisementMenu(companyID);
 			}
 		});
 		Applications.addActionListener(new ActionListener() {

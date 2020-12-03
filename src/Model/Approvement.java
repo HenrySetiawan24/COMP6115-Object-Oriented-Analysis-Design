@@ -32,6 +32,23 @@ public class Approvement {
 		
 	}
 	
+	public static Vector<Approvement> getAll(int UserID) {
+		ResultSet data = connection.execQuery("SELECT * FROM `approvement` WHERE UserID = '"+UserID+"'");
+		Vector<Approvement> dataset = new Vector<>();
+		try {
+			while(data.next()) {
+				Approvement n = new Approvement(	data.getInt("applicationID"), 
+													data.getInt("approvementID"));
+
+				dataset.add(n);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return dataset;
+		
+	}
+	
 	public static boolean insert(int applicationID) {
 		return connection.execUpdate("INSERT INTO `approvement` "
 									+ "(`approvementID`,`applicationID`) VALUES "

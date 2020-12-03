@@ -8,7 +8,6 @@ import View.MainMenu;
 import View.RegistrationView;
 import View.UserMenu;
 import View.ViewWishlist;
-import View.ViewJobs;
 
 public class UserHandler {
 	

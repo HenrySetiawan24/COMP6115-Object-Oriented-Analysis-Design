@@ -3,7 +3,6 @@ package Controller;
 import java.util.Vector;
 
 import Model.Advertisement;
-import Model.Job;
 import View.EditAdvertisement;
 
 public class AdvertisementHandler {

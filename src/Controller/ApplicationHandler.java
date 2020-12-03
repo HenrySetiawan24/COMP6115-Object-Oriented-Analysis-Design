@@ -4,11 +4,8 @@ import java.util.Vector;
 
 //import Model.Advertisement;
 import Model.Application;
-import Model.Job;
-import View.EditAdvertisement;
 import View.EditApplications;
 import View.ViewApplication;
-import View.ViewJobs;
 //import View.EditAdvertisement;
 
 public class ApplicationHandler {
@@ -17,26 +14,11 @@ public class ApplicationHandler {
 	}
 	
 	public static Vector<Application> GetAll(int userID){
-		Vector<Application> list=new Vector<Application>();
-		for(Application a:Application.getAll()) {
-			if(a.userID==userID)
-				list.add(a);
-		}
-		return list;
+		return Application.getAll(userID);
 	}
 	
 	public static Vector<Application> GetAllCompany(int CompanyID){
-		Vector<Application> list=new Vector<Application>();
-		for(Application a : Application.getAll()) {
-			int cID=0;
-			if(JobHandler.getJob(a.jobID)!=null)
-				cID=JobHandler.getJob(a.jobID).companyID;
-			else if(InternshipHandler.getJob(a.jobID)!=null)
-				cID=InternshipHandler.getJob(a.jobID).companyID;
-			if(cID==CompanyID)
-				list.add(a);
-		}
-		return list;
+		return Application.getAllCompany(CompanyID);
 	}
 	
 	public static Application GetApplication(int ApplicationID){

@@ -10,18 +10,12 @@ public class ApprovementHandler {
 		return Approvement.getAll();
 	}
 	
-	public static Boolean Insert(int applicationID) {
-		return Approvement.insert(applicationID);
+	public static Vector<Approvement> getAll(int UserID){
+		return Approvement.getAll(UserID);
 	}
 	
-	public static Vector<Approvement> getAll(int UserID){
-		Vector<Approvement> list = new Vector<Approvement>();
-		for(Approvement a : getAll()) {
-			if(ApplicationHandler.GetApplication(a.applicationID).userID==UserID) {
-				list.add(a);
-			}
-		}
-		return list;
+	public static Boolean Insert(int applicationID) {
+		return Approvement.insert(applicationID);
 	}
 	
 	public static void viewApprovements(int UserID) {

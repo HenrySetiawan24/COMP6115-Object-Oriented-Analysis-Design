@@ -36,7 +36,23 @@ public class Internship {
 		return dataset;
 		
 	}
-	
+	public static Vector<Internship> getAll(int companyID) {
+		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE salary IS NULL AND companyID='"+companyID+"'");
+		Vector<Internship> dataset = new Vector<>();
+		try {
+			while(data.next()) {
+				Internship n = new Internship(	data.getInt("jobID"), 
+												data.getInt("companyID"), 
+												data.getString("name"), 
+												data.getString("description"));
+				dataset.add(n);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return dataset;
+		
+	}
 	public static Internship find(int jobID) {
 		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE jobID="+jobID+" AND salary IS NULL");
 		try {

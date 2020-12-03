@@ -28,6 +28,23 @@ public class Job extends Internship{
 		}
 		return dataset;
 	}
+	public static Vector<Job> getAllJobs(int companyID){
+		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE salary IS NOT NULL AND companyID = '"+companyID+"'");
+		Vector<Job> dataset = new Vector<>();
+		try {
+			while(data.next()) {
+				Job n = new Job(	data.getInt("jobID"), 
+									data.getInt("companyID"), 
+									data.getString("name"), 
+									data.getString("description"),
+									data.getLong("salary"));
+				dataset.add(n);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return dataset;
+	}
 	public static Job find(int jobID) {
 		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE jobID="+jobID+" AND salary IS NOT NULL");
 		try {

@@ -12,12 +12,7 @@ public class JobHandler {
 	}
 	
 	public static Vector<Job> GetAll(int companyID){
-		Vector<Job> f = Job.getAllJobs();
-		for(Job j : f) {
-			if(j.companyID!=companyID) 
-				f.remove(j);
-		}
-		return f;
+		return Job.getAllJobs(companyID);
 	}
 	
 	public static boolean delete(int jobID, int companyID) {
@@ -64,10 +59,6 @@ public class JobHandler {
 	}
 	
 	public static Job getJob(int JobID) {
-		for(Job j : GetAll()) {
-			if(j.jobID==JobID) 
-				return j;
-		}
-		return null;
+		return Job.find(JobID);
 	}
 }

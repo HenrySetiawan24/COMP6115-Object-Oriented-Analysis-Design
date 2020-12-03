@@ -48,6 +48,48 @@ public class Application {
 		
 	}
 	
+	public static Vector<Application> getAll(int userID) {
+		ResultSet data = connection.execQuery("SELECT * FROM `application` WHERE userID = '"+userID+"'");
+		Vector<Application> dataset = new Vector<>();
+		try {
+			while(data.next()) {
+				Application n = new Application(	data.getInt("applicationID"), 
+													data.getInt("userID"), 
+													data.getInt("jobID"), 
+													data.getString("name"), 
+													data.getString("cvdescription"),
+													data.getString("transcriptdescription"),
+													data.getString("type"));
+
+				dataset.add(n);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return dataset;
+		
+	}
+	public static Vector<Application> getAllCompany(int CompanyID) {
+		ResultSet data = connection.execQuery("SELECT * FROM `application` WHERE jobID in (SELECT internship.jobID FROM `internship` WHERE companyID = '"+CompanyID+"')");
+		Vector<Application> dataset = new Vector<>();
+		try {
+			while(data.next()) {
+				Application n = new Application(	data.getInt("applicationID"), 
+													data.getInt("userID"), 
+													data.getInt("jobID"), 
+													data.getString("name"), 
+													data.getString("cvdescription"),
+													data.getString("transcriptdescription"),
+													data.getString("type"));
+
+				dataset.add(n);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return dataset;
+		
+	}
 	public static Application find(int applicationID) {
 		ResultSet data = connection.execQuery("SELECT * FROM application WHERE applicationID="+applicationID);
 		try {
