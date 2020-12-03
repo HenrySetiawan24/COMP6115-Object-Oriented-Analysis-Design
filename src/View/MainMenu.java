@@ -56,6 +56,7 @@ public class MainMenu extends JFrame{
 	}
 	
 	public void init() {
+		setTitle("MainMenu");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(new Dimension(900,600));

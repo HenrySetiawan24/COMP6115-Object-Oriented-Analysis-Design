@@ -41,6 +41,7 @@ public class ViewApplication extends JFrame{
 
 	public ViewApplication(int UserID) {
 		init(UserID);
+		setTitle("Applications");
 		setSize(900,600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

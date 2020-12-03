@@ -37,6 +37,7 @@ public class EditJob extends JFrame{
 	
 	public EditJob(int companyID) {
 		init(companyID);
+		setTitle("");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);

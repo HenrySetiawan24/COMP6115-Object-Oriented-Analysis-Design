@@ -32,6 +32,7 @@ public class ViewApprovement extends JFrame{
 	
 	public ViewApprovement(int UserID) {
 		init(UserID);
+		setTitle("Approvements");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);

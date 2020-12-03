@@ -41,6 +41,7 @@ public class EditApplications extends JFrame{
 
 	public EditApplications(int CompanyID) {
 		init(CompanyID);
+		setTitle("Manage Applications");
 		setSize(900,600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

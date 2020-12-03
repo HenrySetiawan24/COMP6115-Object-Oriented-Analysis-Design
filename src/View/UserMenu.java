@@ -42,7 +42,6 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				dispose();
 				JobHandler.viewJobs(userID);
 			}
 		});
@@ -75,7 +74,6 @@ public class UserMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				UserHandler.viewWishList(userID);
 				UserHandler.logOut();
 			}
 		});
@@ -98,6 +96,7 @@ public class UserMenu extends JFrame{
 	}
 	
 	public void init() {
+		setTitle("UserMenu");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(new Dimension(900,600));

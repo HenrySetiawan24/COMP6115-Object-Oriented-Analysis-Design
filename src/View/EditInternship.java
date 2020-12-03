@@ -37,6 +37,7 @@ public class EditInternship extends JFrame{
 	
 	public EditInternship(int companyID) {
 		init(companyID);
+		setTitle("Manage Internship");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);

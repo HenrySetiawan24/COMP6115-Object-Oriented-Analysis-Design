@@ -37,6 +37,7 @@ public class EditAdvertisement extends JFrame{
 	
 	public EditAdvertisement(int companyID) {
 		init(companyID);
+		setTitle("Manage Advertisements");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);

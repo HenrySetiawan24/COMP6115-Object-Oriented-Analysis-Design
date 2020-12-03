@@ -43,6 +43,7 @@ public class ViewWishlist extends JFrame{
 	Job job;
 	public ViewWishlist(int userID) {
 		init(userID);
+		setTitle("Wishlist");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(new Dimension(900, 600));

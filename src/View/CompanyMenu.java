@@ -92,6 +92,7 @@ public class CompanyMenu extends JFrame{
 	}
 	
 	public void init() {
+		setTitle("Company Menu");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(new Dimension(900,600));

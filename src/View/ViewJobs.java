@@ -50,6 +50,7 @@ public class ViewJobs extends JFrame{
 	
 	public ViewJobs(int UserID) {
 		init(UserID);
+		setTitle("Jobs");
 		setSize(900,600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
