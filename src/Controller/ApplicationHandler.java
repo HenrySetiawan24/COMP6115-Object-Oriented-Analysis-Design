@@ -1,12 +1,9 @@
 package Controller;
 
 import java.util.Vector;
-
-//import Model.Advertisement;
 import Model.Application;
 import View.EditApplications;
 import View.ViewApplication;
-//import View.EditAdvertisement;
 
 public class ApplicationHandler {
 	public static Vector<Application> GetAll(){
@@ -40,17 +37,17 @@ public class ApplicationHandler {
 		return false;
 	}
 	public static boolean update(int applicationID, int userID, int jobID, String name, String cvdescription, String transcriptdescription, String type) {
-		if(Application.update(applicationID, userID, jobID, name, cvdescription, transcriptdescription, type)) 
+		if(check(applicationID, userID)&&Application.update(applicationID, userID, jobID, name, cvdescription, transcriptdescription, type)) 
 			return true;
 		return false;
 	}
-	public static boolean delete(int applicationID) {
-		if(check(applicationID)&&Application.delete(applicationID)) 
+	public static boolean delete(int applicationID, int userID) {
+		if(check(applicationID, userID)&&Application.delete(applicationID)) 
 			return true;
 		return false;
 	}
-	private static boolean check(int applicationID) {
-		if(Application.find(applicationID).applicationID==applicationID)
+	private static boolean check(int applicationID, int userID) {//memastikan apakah application yang dimasukan dimiliki oleh pengguna yg dimasukan.
+		if(Application.find(applicationID).userID==userID)
 			return true;
 		return false;
 	}
@@ -61,10 +58,10 @@ public class ApplicationHandler {
 		}
 		return null;
 	}
-	public static void viewApplications(int userID) {
+	public static void viewApplications(int userID) {//rute membuka ViewApplications
 		new ViewApplication(userID);
 	}
-	public static void editApplications(int companyID) {
+	public static void editApplications(int companyID) {//rute membuka EditApplications
 		new EditApplications(companyID);
 	}
 }

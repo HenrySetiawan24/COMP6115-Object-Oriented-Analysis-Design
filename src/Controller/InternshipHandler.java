@@ -28,7 +28,7 @@ public class InternshipHandler {
 		return false;
 	}
 	
-	public static void ViewInternshipMenu(int companyID) {
+	public static void ViewInternshipMenu(int companyID) {//rute membuka EditInternship
 		new EditInternship(companyID);
 	}
 	

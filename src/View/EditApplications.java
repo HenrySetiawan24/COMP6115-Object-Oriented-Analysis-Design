@@ -24,6 +24,7 @@ import Controller.ApprovementHandler;
 import Controller.CompanyHandler;
 import Model.Application;
 
+@SuppressWarnings("serial")
 public class EditApplications extends JFrame{
 	
 	JPanel top,mid,bot,left;

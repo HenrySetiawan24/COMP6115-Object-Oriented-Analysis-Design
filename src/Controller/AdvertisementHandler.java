@@ -1,16 +1,16 @@
 package Controller;
 
+import java.util.Random;
 import java.util.Vector;
-
 import Model.Advertisement;
 import View.EditAdvertisement;
 
 public class AdvertisementHandler {
-	public static Vector<Advertisement> GetAll(){
+	private static Vector<Advertisement> GetAll(){
 		return Advertisement.getAll();
 	}
 	
-	public static Vector<Advertisement> GetAll(int CompanyID){
+	public static Vector<Advertisement> GetAll(int CompanyID){//Get all untuk suatu company
 		Vector<Advertisement> list=new Vector<Advertisement>();
 		for(Advertisement a:Advertisement.getAll()) {
 			if(a.companyID==CompanyID)
@@ -18,13 +18,14 @@ public class AdvertisementHandler {
 		}
 		return list;
 	}
+	
 	public static boolean insert(int companyID, String title, String description) {
 		if(Advertisement.insert(companyID, title, description)) 
 			return true;
 		return false;
 	}
 	public static boolean update(int advertisementID, int companyID, String title, String description) {
-		if(Advertisement.update(advertisementID, companyID, title, description)) 
+		if(check(advertisementID, companyID)&&Advertisement.update(advertisementID, companyID, title, description)) 
 			return true;
 		return false;
 	}
@@ -33,7 +34,8 @@ public class AdvertisementHandler {
 			return true;
 		return false;
 	}
-	private static boolean check(int advertisementID, int companyID) {
+	
+	private static boolean check(int advertisementID, int companyID) {//untuk memastikan ad yang dimasukan dimiliki oleh company yang dimasukan.
 		if(Advertisement.find(advertisementID).companyID==companyID)
 			return true;
 		return false;
@@ -45,8 +47,15 @@ public class AdvertisementHandler {
 		}
 		return null;
 	}
+	public static Advertisement getOneRandom() {
+		Random random = new Random();
+		Vector<Advertisement> ads= AdvertisementHandler.GetAll();
+		int adID = random.nextInt(ads.size());
+		
+		return ads.elementAt(adID);
+	}
 	
-	public static void viewAdvertisementMenu(int companyID) {
+	public static void viewAdvertisementMenu(int companyID) {//rute akses View Edit Advertisment
 		new EditAdvertisement(companyID);
 	}
 	

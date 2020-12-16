@@ -19,7 +19,7 @@ public class Internship {
 		this.description=description;
 	}
 	
-	public static Vector<Internship> getAll() {
+	public static Vector<Internship> getAll() {//Internship dan Job merupakan 1 tabel di DB, bedanya internship tidak ada salary.
 		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE salary IS NULL");
 		Vector<Internship> dataset = new Vector<>();
 		try {

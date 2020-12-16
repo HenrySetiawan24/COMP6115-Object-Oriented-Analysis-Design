@@ -24,8 +24,9 @@ public class JobHandler {
 	}
 	
 	public static boolean update(int jobID, int companyID, String name, String description, long salary) {
-		if(Job.update(jobID, companyID, name, description, salary)) 
-			return true;
+		if(CheckJob(jobID, companyID))
+			if(Job.update(jobID, companyID, name, description, salary)) 
+				return true;
 		return false;
 	}
 	
@@ -33,7 +34,7 @@ public class JobHandler {
 		new EditJob(companyID);
 	}
 	
-	public static boolean CheckJob(int jobID, int companyID) {
+	public static boolean CheckJob(int jobID, int companyID) {//validasi job yang mau di ubah milik company yang dimasukan.
 		Job v=Job.find(jobID);
 		if(v.companyID==companyID) 
 			return true;

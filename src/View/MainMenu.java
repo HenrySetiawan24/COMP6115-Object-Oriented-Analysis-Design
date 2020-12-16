@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.UserHandler;
 
 @SuppressWarnings("serial")
-public class MainMenu extends JFrame{
+public class MainMenu extends JFrame{//Menu yang paling pertama dibuka setelah program dijalankan.
 	JLabel Title;
 	JButton LoginBtn, RegisterBtn;
 	JPanel mainFrame, contentFrame;
@@ -28,7 +28,7 @@ public class MainMenu extends JFrame{
 
 		LoginBtn = new JButton("Login");
 		RegisterBtn = new JButton("Register");
-		LoginBtn.addActionListener(new ActionListener() {
+		LoginBtn.addActionListener(new ActionListener() {//Pengguna bisa memilih login atau register
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub

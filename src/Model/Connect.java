@@ -8,7 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Connect {
+public class Connect {//helper untuk menyambungkan db dengan model.
 	Connection con;
 	Statement state;
 	ResultSet rs;
@@ -21,11 +21,9 @@ public class Connect {
 			
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/deluxe", "root", "");
 			state = con.createStatement();
-			System.out.println("Koneksi Berhasil");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Koneksi Gagal");
 			e.printStackTrace();
 		}
 	}

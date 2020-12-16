@@ -3,7 +3,7 @@ package Model;
 import java.sql.SQLException;
 import java.util.Vector;
 
-public class Company {
+public class Company {//Seperti model user tapi untuk Company, tabel di database juga dipisah.
 	
 	public int companyID;
 	public String name;

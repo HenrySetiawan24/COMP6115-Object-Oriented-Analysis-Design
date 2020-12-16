@@ -28,6 +28,7 @@ import Model.Internship;
 import Model.Job;
 import Model.Wishlist;
 
+@SuppressWarnings("serial")
 public class ViewWishlist extends JFrame{
 	JLabel title;
 	JScrollPane scroll;

@@ -1,13 +1,11 @@
 package Controller;
 
 import java.util.regex.Pattern;
-
 import Model.User;
 import View.LoginView;
 import View.MainMenu;
 import View.RegistrationView;
 import View.UserMenu;
-import View.ViewWishlist;
 
 public class UserHandler {
 	
@@ -28,7 +26,7 @@ public class UserHandler {
 		return user.insert(name, email, password, address, phoneNumber, role);
 	}
 	
-	public static boolean checkEmail(String email) {
+	public static boolean checkEmail(String email) {//untuk validasi email yang dimasukan unik dan format benar.
 		if(email == null) {
 			return false;
 		}
@@ -37,24 +35,16 @@ public class UserHandler {
 		return pattern.matcher(email).matches();
 	}
 	
-	public static void viewRegistration() {
+	public static void viewRegistration() {//rute ke layar register
 		new RegistrationView();
 	}
 	
-	public static void viewLogin() {
+	public static void viewLogin() {//rute ke layar login
 		new LoginView();
 	}
 	
-	public static void viewUserMenu(int userID) {
+	public static void viewUserMenu(int userID) {//rute ke main menu untuk Student/Employee
 		new UserMenu(userID);
-	}
-	
-	public static void viewJobs(int userID) {
-//		new JobsView(userID);
-	}
-	
-	public static void viewWishList(int userID) {
-		new ViewWishlist(userID);
 	}
 	
 	public static User getOne(String email, String password) {

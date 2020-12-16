@@ -24,7 +24,7 @@ public class CompanyMenu extends JFrame{
 	JLabel Title;
 	JButton JobsBtn, InternshipBtn, AdvertisementBtm, LogoutBtn, Applications;
 	JPanel mainFrame, contentFrame;
-	public CompanyMenu(int companyID) {
+	public CompanyMenu(int companyID) {//di sini pengguna yang sudah login menggunakan akun company bisa mengakses semua menu yang hanya bisa diakses oleh company.
 		init();
 		mainFrame = new JPanel(new BorderLayout());
 		contentFrame = new JPanel(new GridLayout(5, 1, 1, 10));

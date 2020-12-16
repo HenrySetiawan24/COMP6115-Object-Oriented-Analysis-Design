@@ -11,7 +11,7 @@ public class Job extends Internship{
 		super(jobID, companyID, name, description);
 		this.salary=salary;
 	}
-	public static Vector<Job> getAllJobs(){
+	public static Vector<Job> getAllJobs(){//Internship dan Job merupakan 1 tabel di DB, bedanya internship tidak ada salary.
 		ResultSet data = connection.execQuery("SELECT * FROM internship WHERE salary IS NOT NULL");
 		Vector<Job> dataset = new Vector<>();
 		try {

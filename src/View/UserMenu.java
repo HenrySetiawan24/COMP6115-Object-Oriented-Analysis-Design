@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -20,7 +19,7 @@ import Controller.UserHandler;
 import Controller.WishlistHandler;
 
 @SuppressWarnings("serial")
-public class UserMenu extends JFrame{
+public class UserMenu extends JFrame{//disini pengguna bisa mengakses semua menu yang bisa diakses oleh student/employee
 	JLabel Title;
 	JButton ViewJobsBtn, WishListBtn, ApplicationsBtn, LogoutBtn, ApprovedBtn;
 	JPanel mainFrame, contentFrame;

@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -22,7 +21,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.AdvertisementHandler;
 import Controller.ApplicationHandler;
-import Controller.CompanyHandler;
 import Controller.InternshipHandler;
 import Controller.JobHandler;
 import Controller.UserHandler;
@@ -31,6 +29,7 @@ import Model.Advertisement;
 import Model.Internship;
 import Model.Job;
 
+@SuppressWarnings("serial")
 public class ViewJobs extends JFrame{
 	
 	JPanel top,mid,bot,left;
@@ -195,10 +194,9 @@ public class ViewJobs extends JFrame{
 		});
 		
 		//Randomize Advertisement
-		Random random = new Random();
-		int adID = random.nextInt(AdvertisementHandler.GetAll().size());
 		
-		loadadData(adID);
+		
+		loadadData();
 		
 		
 		top.add(sp);
@@ -226,7 +224,7 @@ public class ViewJobs extends JFrame{
 
 	}
 	
-	private void loadadData(int Random) {
+	private void loadadData() {//memasukan 1 ad random ke dalam tabel ads
 		adheader = new Vector<>();
 		addata = new Vector<>();
 		
@@ -236,7 +234,7 @@ public class ViewJobs extends JFrame{
 		if(addata==null)addata = new Vector<>();
 		else addata.clear();
 		
-		Advertisement a = AdvertisementHandler.GetAll().elementAt(Random); 
+		Advertisement a = AdvertisementHandler.getOneRandom(); 
 			addetail = new Vector<>();
 			
 			addetail.add(a.title+"");
@@ -248,7 +246,7 @@ public class ViewJobs extends JFrame{
 		adtable.setModel(addtm);
 	}
 	
-	private void loadData(int UserID) {
+	private void loadData(int UserID) {//memasukan tabel job sesuai dengan role pengguna.
 		header = new Vector<>();
 		data = new Vector<>();
 		

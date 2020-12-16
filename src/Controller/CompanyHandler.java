@@ -25,7 +25,7 @@ public class CompanyHandler {
 		return company.insert(name, email, password, address, phoneNumber);
 	}
 	
-	public static boolean checkEmail(String email) {
+	public static boolean checkEmail(String email) {//validasi email yang dimasukan memiliki format yang benar dan unik.
 		if(email == null) {
 			return false;
 		}
@@ -49,7 +49,7 @@ public class CompanyHandler {
 		}
 		return null;
 	}
-	public static void viewCompanyMenu(int companyID) {
+	public static void viewCompanyMenu(int companyID) {//rute membuka CompanyMenu.
 		new CompanyMenu(companyID);
 	}
 }

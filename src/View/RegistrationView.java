@@ -33,7 +33,7 @@ public class RegistrationView extends JFrame{
 	
 	Vector<String> roleList;
 
-	public RegistrationView() {
+	public RegistrationView() {//disini pengguna dapat melakukan registrasi.
 		setTitle("Register Page");
 		
 		top = new JPanel(new FlowLayout());
@@ -61,7 +61,7 @@ public class RegistrationView extends JFrame{
 		roleList.add("Student");
 		roleList.add("Staff");
 		roleList.add("Company");
-		roleBox = new JComboBox<>(roleList);
+		roleBox = new JComboBox<>(roleList);//pengguna bisa memilih role mereka sebagai Employee, Student, atau Company.
 		
 		registerBtn = new JButton("Register");
 		Back = new JButton("Back");

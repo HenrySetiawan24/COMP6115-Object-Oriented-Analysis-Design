@@ -18,7 +18,7 @@ public class Wishlist {
 		this.jobID = jobID;
 	}
 	
-	public static Vector<Wishlist> getAll(int userID){
+	public static Vector<Wishlist> getAll(int userID){//karena wishlist hanya bisa dilihat oleh pengguna masing" maka di model hanya ada untuk user tertentu
 		con.rs = con.execQuery("SELECT * FROM WISHLIST WHERE UserID = '" + userID + "'");
 		Vector<Wishlist> wishlist = new Vector<>();
 		try {

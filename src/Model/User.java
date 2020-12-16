@@ -4,14 +4,14 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 
-public class User {
+public class User {//user mencangkup semua User dan Student.
 	public int userID;
 	public String name;
 	public String password;
 	public String address;
 	public String email;
 	public String phoneNumber;
-	public String role;
+	public String role;//bisa diisi dengan [Student dan Employee]
 
 	private static Connect con = new Connect();
 	private static Vector<User> userList = null;
@@ -20,8 +20,7 @@ public class User {
 		
 	}
 
-	public User(int userID, String name, String password, String address, String email, String phoneNumber,
-			String role) {
+	public User(int userID, String name, String password, String address, String email, String phoneNumber, String role) {
 		this.userID = userID;
 		this.name = name;
 		this.password = password;

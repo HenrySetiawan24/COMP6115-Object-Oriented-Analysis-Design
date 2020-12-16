@@ -20,10 +20,10 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.ApplicationHandler;
-import Controller.ApprovementHandler;
 import Controller.UserHandler;
 import Model.Application;
 
+@SuppressWarnings("serial")
 public class ViewApplication extends JFrame{
 	
 	JPanel top,mid,bot,left;
@@ -126,7 +126,7 @@ public class ViewApplication extends JFrame{
 					return;
 				}
 				
-				ApplicationHandler.delete(ApplicationID);
+				ApplicationHandler.delete(ApplicationID, UserID);
 				loadData(UserID);
 			}
 		});

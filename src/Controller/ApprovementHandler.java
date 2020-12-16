@@ -18,7 +18,7 @@ public class ApprovementHandler {
 		return Approvement.insert(applicationID);
 	}
 	
-	public static void viewApprovements(int UserID) {
+	public static void viewApprovements(int UserID) {//rute membuka View Approvements
 		new ViewApprovement(UserID);
 	}
 }

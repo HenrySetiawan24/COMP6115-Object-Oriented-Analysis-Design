@@ -33,7 +33,8 @@ public class Approvement {
 	}
 	
 	public static Vector<Approvement> getAll(int UserID) {
-		ResultSet data = connection.execQuery("SELECT * FROM `approvement` WHERE UserID = '"+UserID+"'");
+		ResultSet data = connection.execQuery("SELECT * FROM `approvement` "
+				+ "WHERE `applicationID` IN ( SELECT `applicationID` FROM `application` WHERE `userID`="+UserID+")");
 		Vector<Approvement> dataset = new Vector<>();
 		try {
 			while(data.next()) {
@@ -51,7 +52,7 @@ public class Approvement {
 	
 	public static boolean insert(int applicationID) {
 		ResultSet data = connection.execQuery("SELECT * FROM `approvement` WHERE applicationID = '"+applicationID+"'");
-		try {
+		try {//validasi sebelum dimasukan, jika aplication sudah pernah di approve maka tidak dimasukan lagi.
 			while(data.next())
 				return false;
 		} catch (SQLException e) {

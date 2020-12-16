@@ -22,7 +22,7 @@ import Controller.CompanyHandler;
 import Controller.UserHandler;
 
 @SuppressWarnings("serial")
-public class LoginView extends JFrame{
+public class LoginView extends JFrame{//disini pengguna dapat masuk kedalam akun mereka.
 	JPanel top, mid, bot;
 	JLabel titleLbl, emailLbl, passwordLbl, roleLbl;
 	JTextField emailTxt, passwordTxt;
@@ -68,17 +68,17 @@ public class LoginView extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
+				if(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {//Disini akun yang baru masuk ditentukan role mereka.
 					JOptionPane.showMessageDialog(null, "Login Sukses");
 					dispose();
-					UserHandler.viewUserMenu(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()).userID);
+					UserHandler.viewUserMenu(UserHandler.getOne(emailTxt.getText(), passwordTxt.getText()).userID);//jika mereka Employee atau Student akan di perlihatkan layar User Menu
 				}
 				else if(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()) != null) {
 					JOptionPane.showMessageDialog(null, "Login Sukses");
 					dispose();
-					CompanyHandler.viewCompanyMenu(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()).companyID);
+					CompanyHandler.viewCompanyMenu(CompanyHandler.getOne(emailTxt.getText(), passwordTxt.getText()).companyID);//jika mereka company, akan diperlihatkan layar Company Menu
 				}
-				else {
+				else {//Jika login gagal
 					JOptionPane.showMessageDialog(null, "Login Gagal");
 				}
 			}

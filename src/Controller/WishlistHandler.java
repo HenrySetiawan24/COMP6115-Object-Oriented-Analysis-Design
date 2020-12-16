@@ -25,7 +25,7 @@ public class WishlistHandler {
 		return Wishlist.delete(wishlistID);
 	}
 	
-	public static void ViewWishlist(int userID) {
+	public static void ViewWishlist(int userID) {//rute ke ViewWishlist
 		new ViewWishlist(userID);
 	}
 }
